@@ -9,8 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primaryBackground: "#FFFEFC", // background color (off-white)
+        secondaryBackground: "#F0F0EF",
+        border: "#D9CCC1",
+        primaryText: "#938274",
+        secondaryText: "#A69383", // Secondary Text color (brownish)
+        thrBackground: "#F2E4D8", // light color (pale beige)
+        primaryButton: "#729DA6", // medium color (blue-gray)
+        secondaryButton: "#D8EEF2",
+        primaryButtonHover: "#5B7F86",
+      },
+      backgroundImage: {
+        'home-background': "url('public/homeBackground.png')",
+        'foreground': "url('public/car.png')",
       },
     },
   },
