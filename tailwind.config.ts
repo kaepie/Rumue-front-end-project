@@ -22,6 +22,7 @@ const config: Config = {
       backgroundImage: {
         'home-background': "url('public/homeBackground.png')",
         'foreground': "url('public/car.png')",
+        'backgroundSection3': "url('public/backgroundSection3.png')",
       },
     },
   },
