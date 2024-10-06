@@ -1,12 +1,12 @@
 import Image from "next/image";
-import background from "../../public/backgroundSection3.png";
+import background from "../../../public/backgroundSection3.png";
 import CardSection3 from "./cardsection3";
 import TextTitleAnimation from "@/app/components/TextTitleAnimation";
 import { promises as fs } from "fs";
 import path from "path";
 
 export default async function Section3(){
-    const filePath = path.join(process.cwd(), 'app/api/json/section3.json');
+    const filePath = path.join(process.cwd(), 'public/json/section3.json');
     const file = await fs.readFile(filePath, 'utf8');
     const data = JSON.parse(file);
 

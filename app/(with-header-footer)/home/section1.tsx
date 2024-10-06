@@ -1,5 +1,5 @@
 import Image from "next/image";
-import carInsurent from "../../public/homeBackground.png";
+import carInsurent from "../../../public/homeBackground.png";
 import Car from "./car";
 import TextTitleAnimation from "@/app/components/TextTitleAnimation";
 import ParagraphAnimation from "@/app/components/ParagraphAnimation";

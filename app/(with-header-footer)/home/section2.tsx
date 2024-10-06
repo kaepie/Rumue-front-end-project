@@ -5,7 +5,7 @@ import { promises as fs } from "fs";
 import path from "path";
 
 export default async function Section2() {
-    const filePath = path.join(process.cwd(), 'app/api/json/section2.json');
+    const filePath = path.join(process.cwd(), '/public/json/section2.json');
     const file = await fs.readFile(filePath, 'utf8');
     const data = JSON.parse(file);
 

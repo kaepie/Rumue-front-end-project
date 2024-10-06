@@ -1,0 +1,56 @@
+[
+    {
+        "title": "ประกันชั้น 1",
+        "type": "class1",
+        "list": [
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            }
+        ]
+    },
+    {
+        "title": "ประกันชั้น 2",
+        "type": "class2",
+        "list": [
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            }
+        ]
+    },
+    {
+        "title": "ประกันชั้น 3",
+        "type": "class3",
+        "list": [
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            },
+            {
+                "data":"Up to 50 team members"
+            }
+        ]
+    }
+]

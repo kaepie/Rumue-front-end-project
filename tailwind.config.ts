@@ -5,6 +5,7 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./public/*"
   ],
   theme: {
     extend: {
@@ -18,11 +19,6 @@ const config: Config = {
         primaryButton: "#729DA6", // medium color (blue-gray)
         secondaryButton: "#D8EEF2",
         primaryButtonHover: "#5B7F86",
-      },
-      backgroundImage: {
-        'home-background': "url('public/homeBackground.png')",
-        'foreground': "url('public/car.png')",
-        'backgroundSection3': "url('public/backgroundSection3.png')",
       },
     },
   },
