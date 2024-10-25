@@ -19,6 +19,7 @@ const config: Config = {
         primaryButton: "#729DA6", // medium color (blue-gray)
         secondaryButton: "#D8EEF2",
         primaryButtonHover: "#5B7F86",
+        generateButton: "#5D5A88", // Neutral Purple 
       },
     },
   },
