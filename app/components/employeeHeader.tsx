@@ -22,17 +22,17 @@ const EmployeeHeader = () => {
         <nav className="">
           <ul className="flex space-x-4 items-center text-primaryText">
             <motion.li whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}>
-              <Link href="/home" className={`relative hover:hover-link ${isActive("/home") ? "active-link" : ""}`}>
+              <Link href="/employee/home" className={`relative hover:hover-link ${isActive("/employee/home") ? "active-link" : ""}`}>
                 หน้าแรก
               </Link>
             </motion.li>
             <motion.li whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}>
-              <Link href="/employeeProfile" className={`relative ${isActive("/employeeProfile") ? "active-link" : ""} hover:hover-link`}>
+              <Link href="/employee/employeeInfo" className={`relative ${isActive("/employee/employeeInfo") ? "active-link" : ""} hover:hover-link`}>
                 โปรไฟล์ของพนักงาน
               </Link>
             </motion.li>
             <motion.li whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}>
-              <Link href="/orderHistory" className={`relative ${isActive("/orderHistory") ? "active-link" : ""} hover:hover-link`}>
+              <Link href="/employee/home" className={`relative ${isActive("/employee/home") ? "active-link" : ""} hover:hover-link`}>
                 ประวัติรายการที่จัดการ
               </Link>
             </motion.li>
