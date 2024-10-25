@@ -43,7 +43,7 @@ export default function VehicleProgressBar({currentPath} : VehicleProgressBarPro
         {/* Progress Line */}
         <div className="relative w-full max-w-5xl mt-10 flex justify-between">
 
-          <div className="-z-10 absolute top-2 w-full h-[1px] bg-black" />
+          <div className="-z-10 absolute top-2 w-full h-[1px] bg-black rounded-lg" />
 
           {/* Dots on the progress line */}
           {Array.from({ length: totalSteps }).map((_, index) => (
@@ -51,7 +51,7 @@ export default function VehicleProgressBar({currentPath} : VehicleProgressBarPro
               key={index}
               className={`w-6 h-6 rounded-full border-[1px] ${
                 step >= index ? "bg-primaryText border-black" : "bg-border border-black"
-              } ${step == index ? "opacity-0" : "opacity-100"} delay-300`}
+              } ${step == index ? "opacity-0" : "opacity-100"} transform transition-opacity duration-300`}
             />
           ))}
           <Image

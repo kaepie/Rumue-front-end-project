@@ -2,6 +2,7 @@ import ParagraphAnimation from "@/app/components/ParagraphAnimation";
 import TextTitleAnimation from "@/app/components/TextTitleAnimation";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion } from "framer-motion";
 
 interface CardTypeProps {
     title: string;
@@ -20,6 +21,7 @@ export default function CardType({title, list, typeItem, type, setType} : CardTy
 
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
+    
     return(
         <div className={`w-full h-auto border-[1px] ${type === typeItem ? "bg-primaryText" : "bg-primaryBackground"} border-border rounded-xl px-6 pt-6 pb-60 space-y-6`}>
             <TextTitleAnimation className={`text-3xl font-bold ${type === typeItem ? "text-primaryBackground" : "text-primaryText"}`} content={title}/>
@@ -50,18 +52,16 @@ export default function CardType({title, list, typeItem, type, setType} : CardTy
     function List({data} : ListProps){
         return(
             <div className="flex flex-row gap-2 justify-center items-center">
-                <div className={`rounded-full border-[2px] border-primaryText ${type === typeItem ? "bg-primaryBackground" : "bg-primaryText"} w-6 h-6 flex justify-center items-center`}
-                    ref={ref}
-                    style={{
-                        transform: isInView ? "none" : "translateY(20px) scale(0.95)",
-                        opacity: isInView ? 1 : 0,
-                        transition: "all 0.9s ease-out 0.5s"
-                    }}
-                    >
+                <motion.div 
+                    animate={{ y: [40, 0], opacity: [0, 1] , scale: [0.95, 1]}}
+                    transition={{ ease: "easeOut", duration: 1.2 }}
+                    className={`rounded-full border-[2px] border-primaryText ${type === typeItem ? "bg-primaryBackground" : "bg-primaryText"} w-6 h-6 flex justify-center items-center`}
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${type === typeItem ? "text-primaryText" : "text-primaryBackground"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                </div>
+                </motion.div>
+
                 <ParagraphAnimation className={`${type === typeItem ? "text-primaryBackground" : "text-primaryText"} font-semibold`} content={data}/>
             </div>
         )

@@ -19,7 +19,6 @@ export default function ShowPrice() {
 
     const [list, setList] = useState<{ [key: string]: any[] }>({});
     
-    
     useEffect(() => {
         const fetchListData = async () => {
           try {
@@ -37,12 +36,12 @@ export default function ShowPrice() {
         fetchListData();
       }, []);
     
-    useEffect(() => {
-        if (!type || !model || !brand || !year || !mileage) {
-            router.push("/checkPrice");
-        }
-    }
-    , []);
+    // useEffect(() => {
+    //     if (!type || !model || !brand || !year || !mileage) {
+    //         router.push("/checkPrice");
+    //     }
+    // }
+    // , []);
 
     return (
         <div className="h-auto w-screen flex flex-col justify-center items-center px-72 pb-12 ">
@@ -61,7 +60,7 @@ export default function ShowPrice() {
                     <List key={index} data={item}/>
                 ))}
                 <div className="flex flex-row justify-center mt-10">
-                    <Link href="/vehicleform">
+                    <Link href={{pathname :"/vehicleform", query: {type:type, model:model, brand:brand, year:year, mileage:mileage}}}>
                         <button className="flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText w-fit">
                             ทำรายการ
                         </button>
