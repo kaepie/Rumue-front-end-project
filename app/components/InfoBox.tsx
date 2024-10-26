@@ -1,5 +1,19 @@
 import React from 'react';
-import { OrderData } from './OrderData'; // Adjust the path as necessary
+
+interface Car {
+  brand: string;
+  model: string;
+  year: string;
+  chassisNumber: string;
+}
+
+interface OrderData {
+  orderId: string;
+  type: string;
+  creationDate: string;
+  status: string;
+  car: Car;
+}
 
 const OrderCard: React.FC<{ order: OrderData }> = ({ order }) => {
   return (
@@ -10,7 +24,7 @@ const OrderCard: React.FC<{ order: OrderData }> = ({ order }) => {
           <h2 className="text-lg font-bold">{order.type}</h2>
           <p className="text-sm">รหัสคำสั่ง <span className="font-semibold">{order.orderId}</span></p>
           <p className="text-sm mt-2">{order.car.brand}, {order.car.model}</p>
-          <p className="text-sm">ปี {order.car.year} | 'N/A'</p>
+          <p className="text-sm">ปี {order.car.year} | N/A</p>
           <p className="text-sm mt-1">เลขตัวถัง <span className="font-semibold">{order.car.chassisNumber}</span></p>
           <p className="text-sm">วันที่กรอกคำสั่งซื้อ <span className="font-semibold">{order.creationDate}</span></p>
         </div>
