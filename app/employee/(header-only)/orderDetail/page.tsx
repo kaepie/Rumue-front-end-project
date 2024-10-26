@@ -1,3 +1,4 @@
+
 import CarOwnerInfo from "@/app/components/CarInfo";
 import OrderInfo from "@/app/components/OrderInfo";
 import React from "react";
@@ -17,6 +18,16 @@ const orderData = {
     brand: "Toyota",
     model: "Camry",
     color: "Black",
+    chassisNumber: "ABC1234567890", // Added field
+    engineNumber: "ENG9876543210", // Added field
+    fuelType: "Petrol", // Added field
+    cylinderCount: 4, // Added field
+    engineCapacity: 2500, // Added field
+    horsepower: 200, // Added field
+    seatingCapacity: 5, // Added field
+    weight: 1500, // Added field
+    grossWeight: 2000, // Added field
+    wheelCount: 4, // Added field
   },
   owner: {
     name: "John Doe",
@@ -44,19 +55,8 @@ const CombinedComponent = () => {
       {/* Right panel: Car and Owner Information */}
       <CarOwnerInfo
         orderId={orderData.orderId}
-        registrationDate={orderData.car.registrationDate}
-        licenseNumber={orderData.car.licenseNumber}
-        province={orderData.car.province}
-        carType={orderData.car.carType}
-        brand={orderData.car.brand}
-        model={orderData.car.model}
-        color={orderData.car.color}
-        ownerName={orderData.owner.name}
-        ownerIdCard={orderData.owner.idCard}
-        ownerBirthDate={orderData.owner.birthDate}
-        ownerNationality={orderData.owner.nationality}
-        ownerPhone={orderData.owner.phone}
-        ownerAddress={orderData.owner.address}
+        car={orderData.car} // Pass the entire car object
+        owner={orderData.owner} // Pass the entire owner object
       />
     </div>
   );
