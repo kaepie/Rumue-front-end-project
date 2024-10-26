@@ -14,13 +14,13 @@ export default function VehicleProgressBar({currentPath} : VehicleProgressBarPro
     const totalSteps = 4; // Number of steps in the image
 
     useEffect(() => {
-      if (currentPath === "/showPrice") {
+      if (currentPath === "showPrice") {
         setStep(1);
       }
-      if (currentPath === "/vehicleform") {
+      if (currentPath === "vehicleform") {
         setStep(2);
       }
-      if (currentPath === "/payment") {
+      if (currentPath === "payment") {
         setStep(3);
       }
     }

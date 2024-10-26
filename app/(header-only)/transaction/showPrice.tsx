@@ -1,21 +1,20 @@
 'use client';
 
 import TextTitleAnimation from "@/app/components/TextTitleAnimation";
-import Link from "next/link";
 import List from "./list";
 import ParagraphAnimation from "@/app/components/ParagraphAnimation";
-import {  useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function ShowPrice() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
+interface ListShowPriceProps {
+    type?: string;
+    model?: string;
+    brand?: string;
+    year?: string;
+    mileage?: string;
+    setState: any;
+}
 
-    const type = searchParams.get("type");
-    const model = searchParams.get("model");
-    const brand = searchParams.get("brand");
-    const year = searchParams.get("year");
-    const mileage = searchParams.get("mileage");
+export default function ShowPrice({type, model, brand, year, mileage, setState}: ListShowPriceProps) {
 
     const [list, setList] = useState<{ [key: string]: any[] }>({});
     
@@ -35,17 +34,10 @@ export default function ShowPrice() {
     
         fetchListData();
       }, []);
-    
-    // useEffect(() => {
-    //     if (!type || !model || !brand || !year || !mileage) {
-    //         router.push("/checkPrice");
-    //     }
-    // }
-    // , []);
 
     return (
         <div className="h-auto w-screen flex flex-col justify-center items-center px-72 pb-12 ">
-            <div className="container flex flex-col h-fit bg-primaryBackground border-primaryText border-2 rounded-2xl py-10 px-12">
+            <div className="container flex flex-col h-fit bg-primaryBackground border-primaryText border-[1px] rounded-2xl py-10 px-12">
                 <div className="w-full flex justify-end">
                     <div className="flex justify-center items-center py-2 px-6 bg-primaryText rounded-3xl">
                         <TextTitleAnimation content="ราคา" className="text-xl text-primaryBackground"/>
@@ -60,11 +52,9 @@ export default function ShowPrice() {
                     <List key={index} data={item}/>
                 ))}
                 <div className="flex flex-row justify-center mt-10">
-                    <Link href={{pathname :"/vehicleform", query: {type:type, model:model, brand:brand, year:year, mileage:mileage}}}>
-                        <button className="flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText w-fit">
-                            ทำรายการ
-                        </button>
-                    </Link>
+                    <button onClick={() => setState("vehicleform")} className="flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText w-fit">
+                        ทำรายการ
+                    </button>
                 </div>
             </div>
         </div>

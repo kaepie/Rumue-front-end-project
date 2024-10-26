@@ -163,7 +163,7 @@ export default function CheckPrice() {
   }, []);
 
   const handleClickShowPrice = () => {
-    router.push(`/showPrice?type=${type}&brand=${brand}&model=${model}&year=${year}&mileage=${mileage}`);
+    router.push(`/transaction?type=${type}&brand=${brand}&model=${model}&year=${year}&mileage=${mileage}`);
   }
 
   return (
