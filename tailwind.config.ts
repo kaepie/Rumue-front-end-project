@@ -15,6 +15,7 @@ const config: Config = {
         border: "#D9CCC1",
         primaryText: "#938274",
         secondaryText: "#A69383", // Secondary Text color (brownish)
+        thridText: "#4A3E36",
         thrBackground: "#F2E4D8", // light color (pale beige)
         primaryButton: "#729DA6", // medium color (blue-gray)
         secondaryButton: "#D8EEF2",

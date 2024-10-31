@@ -5,21 +5,21 @@ import "../../globals.css";
 import { usePathname } from "next/navigation";
 import VehicleProgressBar from "./VehicleProgressBar";
 
-export default async function transitionLayout({
-  children,
+export default function TransitionLayout({
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
     const currentPath = usePathname();
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-      }, [currentPath]);
+    }, [currentPath]);
 
     return (
         <div className="flex flex-col justify-center items-center h-auto w-screen">
-            <VehicleProgressBar currentPath={currentPath}/>
+            <VehicleProgressBar currentPath={currentPath} />
             {children}
         </div>
-);
+    );
 }
