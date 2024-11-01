@@ -11,10 +11,12 @@ import SelectBox from "./selectBox";
 import checkPriceSection3 from "@/public/checkPriceSection3.png";
 import { useRouter } from "next/navigation";
 
-interface SelectItemData {
-  title: string[];
-  type: string[];
-  list: any[];
+interface SelectDataProps {
+    Tree: {
+      [brand: string]: {
+        [model: string]: string[];
+      };
+    };
 }
 
 export default function CheckPrice() {
@@ -33,13 +35,7 @@ export default function CheckPrice() {
   
   
   const [typeData, settypeData] = useState([]);
-
-  const [selectItemData, setSelectItemData] = useState<SelectItemData>({ title: [], type: [], list: [] });
-  interface SelectModelData {
-    [key: string]: any;
-  }
-  
-  const [selectModelData, setSelectModelData] = useState<SelectModelData>({});
+  const [selectData, setSelectData] = useState<SelectDataProps>({ Tree: {} } );
 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -128,40 +124,32 @@ export default function CheckPrice() {
   }, []);
 
   useEffect(() => {
-    const fetchSelectItemData = async () => {
+    const fetchSelectData = async () => {
       try {
-        const res = await fetch('/json/testSelect.json'); // Adjusted to the correct path
+        const res = await fetch(`http://localhost:3001/insurance`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
-        const SelectItemJson = await res.json();
-        setSelectItemData(SelectItemJson);
+
+        const SelectDataJson = await res.json();
+        setSelectData(SelectDataJson);
+
       } catch (error) {
         console.error("Error loading typeData:", error);
       }
     };
 
-    fetchSelectItemData();
-  }, []);
-
-  useEffect(() => {
-    const fetchSelectModelData = async () => {
-      try {
-        const res = await fetch('/json/selectModel.json'); // Adjusted to the correct path
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const selectModelJson = await res.json();
-        setSelectModelData(selectModelJson);
-      } catch (error) {
-        console.error("Error loading typeData:", error);
-      }
-    };
-
-    fetchSelectModelData();
+    fetchSelectData();
   }, []);
 
   const handleClickShowPrice = () => {
+    console.log(type, brand, model, year, mileage);
     router.push(`/transaction?type=${type}&brand=${brand}&model=${model}&year=${year}&mileage=${mileage}`);
   }
 
@@ -217,12 +205,27 @@ export default function CheckPrice() {
           <TextTitleAnimation className="text-xl text-primaryText" content="ข้อมูลรถยนต์ของคุณ" />
         </div>
         <div className="flex flex-col items-center gap-8">
-        <SelectBox nameMenu={selectItemData.title[0]} type={selectItemData.type[0]} list={selectItemData.list} isOpen={isBrandOpen} setIsOpen={setIsBrandOpen} value={brand} setValue={setBrand} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
+        {
+          selectData &&(
+            <SelectBox
+            nameMenu="ยี่ห้อ"
+            type="brand"
+            value={brand}
+            setValue={setBrand}
+            isOpen={isBrandOpen}
+            setIsOpen={setIsBrandOpen}
+            list={selectData["Tree"]}
+            handleChangeSelect={handleChangeSelect}
+            handleChangeOpen={handleChangeOpen}
+        />
+          )
+        }
         {brand !== "" && (
-          <SelectBox nameMenu="รุ่น" type="model" list={selectModelData[brand]} isOpen={isModelOpen} setIsOpen={setIsModelOpen} value={model} setValue={setModel} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
-        )}
+            <SelectBox nameMenu="รุ่น" type="model" list={selectData["Tree"][brand]} isOpen={isModelOpen} setIsOpen={setIsModelOpen} value={model} setValue={setModel} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
+          )
+        }
         {brand !== "" && model !== "" && (
-          <SelectBox nameMenu={selectItemData.title[1]} type={selectItemData.type[1]} list={selectItemData.list} isOpen={isYearOpen} setIsOpen={setIsYearOpen} value={year} setValue={setYear} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
+          <SelectBox nameMenu={"ปีรุ่น"} type={"year"} list={selectData["Tree"][brand][model]} isOpen={isYearOpen} setIsOpen={setIsYearOpen} value={year} setValue={setYear} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
         )}
         </div>
       </section>
