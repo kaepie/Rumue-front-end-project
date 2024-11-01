@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(header-only)/(transaction)/vehicleform"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(header-only)/(transaction)/vehicleform", "app/api/auth/[...nextauth]/route.ts"],
   "exclude": ["node_modules"]
 }

@@ -14,11 +14,13 @@ interface PaymentProps {
     setFileSlipUrl: any;
     type: string;
     setState: any;
+    clickSubmit: any;
 }
 
-export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUrl, setFileSlipUrl, type, setState}: PaymentProps){
+export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUrl, setFileSlipUrl, type, setState, clickSubmit}: PaymentProps){
     const [list, setList] = useState<{ [key: string]: any[] }>({});
     const fileInput = useRef<HTMLInputElement>(null);
+    const [hasError, setHasError] = useState(false);
     
     useEffect(() => {
         const fetchListData = async () => {
@@ -48,13 +50,15 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
 
         if (file) {
             // Generate a preview URL
-            const previewUrl = `/uploads/${file.name}`;
-            setFileSlipPreview(previewUrl);
-            setFileSlipUrl(previewUrl); // บันทึก URL ไว้ใน state
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                setFileSlipPreview(reader.result as string);
+            };
         }
     };
 
-    async function uploadFile() {
+    async function uploadFile(){
         const file = fileInput.current?.files?.[0];
 
         if (file) {
@@ -69,12 +73,32 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
             console.log(result);
 
             // Generate a preview URL
-            const previewUrl = URL.createObjectURL(file);
-            setFileSlipPreview(previewUrl);
+            const previewUrl = `/uploads/${file.name}`;
+
+            await setFileSlipUrl(previewUrl);
             return false;
+        }
+        if (fileSlipUrl){
+            return false
         }
         return true;
     }
+
+    useEffect(() => {
+        if (fileSlipUrl) {
+            setFileSlipPreview(fileSlipUrl); // ใช้ URL ที่บันทึกไว้ใน database
+        }
+    }, [fileSlipUrl]);
+
+    useEffect(() => {
+        if(!fileSlipUrl && fileInput.current?.files?.[0]){
+            const name = fileInput.current?.files?.[0].name;
+            const previewUrl = `/uploads/${name}`;
+            setFileSlipUrl(previewUrl);
+            console.log("fileSlipUrl: ",fileSlipUrl);
+        }
+    }, [fileSlipUrl, uploadFile, fileInput]);
+
 
     return(
         <div className="w-screen h-auto flex flex-col justify-center items-center pb-10">
@@ -84,7 +108,10 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
             <div className="w-screen h-auto flex flex-row justify-center items-center gap-10 max-lg:flex-col">
                 <div className="container flex flex-col w-96 h-full bg-primaryBackground border-[1px] border-border rounded-3xl p-10 gap-6">
                     <div className="flex flex-row justify-start">
-                        <button onClick={() => setState("vehicleform")}>
+                        <button onClick={() => {
+                            setState("vehicleform");
+                            uploadFile();
+                        }}>
                             <span className="text-primaryText underline"> ย้อนกลับ </span>
                         </button>
                     </div>
@@ -134,11 +161,20 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
                     </div>
                 </div>
             </div>
+            {hasError && (
+                <div className="mt-6 flex justify-center items-center h-10 w-1/2 rounded-lg border-red-700 border-2 bg-red-500">
+                    <p className="text-white">กรุณาอัปโหลดรูปภาพสลิป</p>
+                </div>
+            )}
             <div className="flex justify-center items-center">
                 <motion.button
                     whileTap={{ scale: 0.97 }}
-                    onClick={() => {
-                        console.log("submit");
+                    onClick={async () => {
+                        const checkError = await uploadFile();
+                        if (!checkError) {
+                            clickSubmit();
+                        }
+                        setHasError(checkError);
                     }}
                     className="mt-6 flex flex-row w-fit items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText"
                 >

@@ -10,7 +10,6 @@ import checkPriceSection2 from "@/public/checkPriceSection2.png";
 import SelectBox from "./selectBox";
 import checkPriceSection3 from "@/public/checkPriceSection3.png";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 interface SelectItemData {
   title: string[];
@@ -69,16 +68,16 @@ export default function CheckPrice() {
 
   const typeDataCard4 = [
     {
-        "data":"Up to 50 team members"
+      data:"คุ้มครองค่ารักษาพยาบาลกรณีบาดเจ็บจากอุบัติเหตุ"
     },
     {
-        "data":"Up to 50 team members"
+      data:"ค่าชดเชยกรณีสูญเสียชีวิตหรือทุพพลภาพถาวร"
     },
     {
-        "data":"Up to 50 team members"
+      data: "คุ้มครองเฉพาะความเสียหายที่เกิดกับชีวิตและร่างกาย ไม่คุ้มครองความเสียหายของทรัพย์สิน"
     },
     {
-        "data":"Up to 50 team members"
+      data: "เป็นประกันภาคบังคับที่ผู้ขับขี่ทุกคนต้องมีตามกฎหมาย"
     }
   ];
 
@@ -175,11 +174,11 @@ export default function CheckPrice() {
           <TextTitleAnimation className="text-lg text-primaryText" content="ประเภท" />
           
           {/* card select type */}
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-4 gap-6 px-6">
             {typeData.map((item: any, index: number) => (
               <CardType key={index} title={item.title} list={item.list} typeItem={item.type} type={type} setType={setType} />
             ))}
-            <CardType type={type} title="พรบ." list={typeDataCard4} typeItem="PRU" setType={setType} />
+            <CardType type={type} title="พรบ." list={typeDataCard4} typeItem="class0" setType={setType} />
           </div>
 
         </div>
