@@ -44,14 +44,20 @@ export default function History(){
         fetchData();
 
     }, [session]);
+
+    if (!transaction) {
+        return <div className="w-svw h-svh flex justify-center items-center"> No content here!!! </div>;
+    }
     return (
         <>
         {
         clickDetail&&
         <div className="flex flex-col items-center justify-center my-24 space-y-5">
-            {transaction.map((item, index) => (
-                <HistoryCard category={item.Transaction.InsuranceType} carModel={`${item.Vehicle.Brand} ${item.Vehicle.Model}`} year={item.Vehicle.ModelYear} miles={item.Vehicle.Miles} engineNo={item.Vehicle.EngineNumber} date={item.Transaction.UpdatedAt} status={item.Transaction.Status} onClickDetail={()=>handleClickDetail(item)}></HistoryCard>
-            ))}
+        
+        {transaction.map((item, index) => (
+            <HistoryCard category={item.Transaction.InsuranceType} carModel={`${item.Vehicle.Brand} ${item.Vehicle.Model}`} year={item.Vehicle.ModelYear} miles={item.Vehicle.Miles} engineNo={item.Vehicle.EngineNumber} date={item.Transaction.UpdatedAt} status={item.Transaction.Status} onClickDetail={()=>handleClickDetail(item)}></HistoryCard>
+        ))}
+        
         </div>
         }
         {

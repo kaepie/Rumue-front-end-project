@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -13,7 +13,7 @@ export default function Header() {
   const currentPath = usePathname();
   const [role, setRole] = useState("");
 
-  const isActive = (path : string) => {
+  const isActive = (path: string) => {
     return currentPath === path;
   }
 
