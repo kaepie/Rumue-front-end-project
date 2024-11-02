@@ -2,7 +2,7 @@
 import { UserSearch,Check,X } from 'lucide-react';
 
 function HistoryCard(props:any) {
-
+    console.log(props.status)
     return (
         <div className="w-full md:p-5 border border-primaryText bg-primaryBackground rounded-3xl mx-6 md:mx-24 container py-5 cursor-pointer hover:border-4 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out" onClick={props.onClickDetail}>
             <div className="flex flex-col md:flex-row items-center md:space-x-5">
