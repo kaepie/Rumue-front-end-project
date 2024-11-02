@@ -279,6 +279,7 @@ export default function ImportantUserInfoSection(ImportantUserInfoSection: Impor
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DatePicker']}>
               <DatePicker
+                label="วันเกิด"
                 value={ImportantUserInfoSection.date}
                 onChange={(newValue) => ImportantUserInfoSection.setDate(newValue)}
                 renderInput={(params) => (
