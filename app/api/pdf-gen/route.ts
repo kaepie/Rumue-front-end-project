@@ -12,8 +12,8 @@ function getDownloadPath() {
 
 export async function POST(req: Request) {
     const chooseDescirptionFromClass = (Description:any)=>{
-        if(Description == "0") return "พรบ."
-        else if(Description == "1" || Description == "2" || Description == "3") return `ประกันรถยนต์ชั้น ${Description}`
+        if(Description == "class0") return "พรบ."
+        else if(Description == "class1" || Description == "class2" || Description == "class3") return `ประกันรถยนต์ชั้น ${Description[Description.length-1]}`
         return Description
     }
     

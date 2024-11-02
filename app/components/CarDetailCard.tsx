@@ -3,8 +3,8 @@ import { Transaction, TransactionData, TransactionWithUndefined } from "../(head
 function CarDetailCard({transaction}:TransactionWithUndefined){
 
     const chooseInsuranceWord = (category:string | undefined)=>{
-        if(category == "0") return "พรบ."
-        else if(category == "1" || category == "2" || category == "3") return `ประกันภัยรถยนต์ชั้น ${category}`
+        if(category == "class0") return "พรบ."
+        else if(category == "class1" || category == "class2" || category == "class3") return `ประกันภัยรถยนต์ชั้น ${category[category.length-1]}`
         else return category
     }
 

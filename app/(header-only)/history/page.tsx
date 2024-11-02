@@ -3,11 +3,13 @@ import HistoryCard from "@/app/components/HistoryCard";
 import { useEffect, useState } from "react";
 import { TransactionData } from "../interface/interface";
 import CardAndOwnerDetailCard from "@/app/components/CardAndOwnerDetailCard";
+import { useSession } from "next-auth/react";
 
 export default function History(){
     const [transaction, setTransaction] = useState<TransactionData[]>([])
     const [clickDetail, setClickDetail] = useState(true)
     const [item, setItem] = useState<TransactionData>()
+    const {data: session} = useSession();
 
     const handleClickDetail = (item:TransactionData) =>{
         setClickDetail(!clickDetail)
@@ -17,7 +19,10 @@ export default function History(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA4NTAzOTgsImlkIjoiZTU3MzFmMWYtZTIwYS00Njc5LWEyMTYtMTIxODBlNDU5ODRiIiwicm9sZSI6InVzZXIifQ.VrJgrer0P0VS-dMJfF39_JF2jJPwQMBUovjY8WY5wXk";
+                const token = session?.user.token;
+                if (!token) {
+                    return;
+                }
                 const response = await fetch(`http://localhost:3001/transaction/history`, {
                     method: 'GET',
                     headers: {
@@ -38,8 +43,7 @@ export default function History(){
 
         fetchData();
 
-    }, []);
-
+    }, [session]);
     return (
         <>
         {

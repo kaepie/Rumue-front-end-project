@@ -3,8 +3,8 @@ import { UserSearch,Check,X } from 'lucide-react';
 
 function HistoryCard(props:any) {
     const chooseInsuranceWord = (category:string)=>{
-        if(category == "0") return "พรบ."
-        else if(category == "1" || category == "2" || category == "3") return `ประกันภัยรถยนต์ชั้น ${category}`
+        if(category == "class0") return "พรบ."
+        else if(category == "class1" || category == "class2" || category == "class3") return `ประกันภัยรถยนต์ชั้น ${category[category.length-1]}`
         else return category
     }
     return (
@@ -27,16 +27,16 @@ function HistoryCard(props:any) {
                 </div>
                 <div className="flex-1 flex flex-col items-center text-center sm:py-5 mb:pb-0">
                     <p className="text-secondaryText text-2xl">สถานะ</p>
-                    {props.status == 'Pending' && <>
+                    {props.status == 'pending' && <>
                         <p className="text-[#DC8C00] text-3xl">กำลังดำเนินการ</p>
                         <UserSearch className='text-[#DC8C00]' size={50}></UserSearch>
                     </>
                     }
-                    {props.status == 'Approve' && <>
+                    {props.status == 'approve' && <>
                         <p className="text-[#4CAF50] text-3xl">ดำเนินการสำเร็จ</p>
                         <Check className='text-[#4CAF50]' size={50}></Check>
                     </>}
-                    {props.status == 'Reject' && <>
+                    {props.status == 'reject' && <>
                         <p className="text-[#E53935] text-3xl">ถูกปฏิเสธ</p>
                         <X className='text-[#E53935]' size={50}></X>
                         </>}
