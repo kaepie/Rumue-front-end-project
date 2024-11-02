@@ -48,7 +48,7 @@ export interface Transaction {
     ESlipImageUrl: string;
     CrImageUrl: string;
     CipNumber: string;
-    VipNumber: string; 
+    VipNumber: string;
     CreatedAt: string;
     UpdatedAt: string;
 }
@@ -65,4 +65,6 @@ export interface TransactionWithUndefined {
 
 export interface UserWithUndefined {
     user: User | undefined
+    setOnclickUpdate: any
+
 }

@@ -1,8 +1,8 @@
 'use client'
 import { CircleX } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-function ProfileEditCard(props: any){
+function ProfileEditCard(props: any) {
     const defaultFname = props.Fname
     const defaultLname = props.Lname
     const defaultCitizenID = props.CitizenID
@@ -16,12 +16,26 @@ function ProfileEditCard(props: any){
     const [citizenID, setCitizenID] = useState(props.CitizenID)
     const [nationlity, setNationality] = useState(props.Nationality)
     const [phone, setPhone] = useState(props.PhoneNumber)
-    const [address, setAddress] = useState(props.Address)
-    const [brith, setBirth] = useState(props.BirthDate)
+    const [address, setAddress] = useState("")
+    const [birth, setBirth] = useState(props.BirthDate)
+    const [houseNumber, setHouseNumber] = useState("")
+    const [valley, setValley] = useState("")
+    const [soi, setSoi] = useState("")
+    const [route, setRoute] = useState("")
+    const [province, setProvince] = useState("")
+    const [district, setDistrict] = useState("")
+    const [subDistrict, setSubDistrict] = useState("")
+    const [postalCode, setPostalCode] = useState("")
 
-    const handleSubmit = async() =>{
+    useRef(() => {
+        const newAddress = defaultAddress + ""
+        const splitedAddress: Array<string> = newAddress.split("|")
+        console.log(splitedAddress)
+    },)
+
+    const handleSubmit = async () => {
         // add address part together here
-        if (fname === defaultFname && lname === defaultLname && citizenID === defaultCitizenID && nationlity === defaultNationlity && phone === defaultPhone && address === defaultAddress && brith === defaultBirth){
+        if (fname === defaultFname && lname === defaultLname && citizenID === defaultCitizenID && nationlity === defaultNationlity && phone === defaultPhone && address === defaultAddress && birth === defaultBirth) {
             // set error text to User
         }
 
@@ -98,7 +112,7 @@ function ProfileEditCard(props: any){
                 <div className="flex flex-col lg:flex-row gap-3 text-primaryText">
                     <div className="flex-col gap-3 inline-block">
                         <p className="text-[24px]">วันเกิด</p>
-                        <input type="date" className="py-4 px-4 rounded-md border-2 border-primaryText" value={brith}></input>
+                        <input type="date" className="py-4 px-4 rounded-md border-2 border-primaryText" value={birth}></input>
                     </div>
                 </div>
             </div>
