@@ -36,6 +36,7 @@ export const authOptions = {
         });
 
         const data = await res.json();
+        console.log(data)
 
         if (res.ok && data?.token) {
           const token = data.token;

@@ -1,9 +1,16 @@
 import { Transaction, TransactionData, TransactionWithUndefined } from "../(header-only)/interface/interface";
 
 function CarDetailCard({transaction}:TransactionWithUndefined){
+
+    const chooseInsuranceWord = (category:string | undefined)=>{
+        if(category == "0") return "พรบ."
+        else if(category == "1" || category == "2" || category == "3") return `ประกันภัยรถยนต์ชั้น ${category}`
+        else return category
+    }
+
     return (
         <div className="px-6 py-10 space-y-16 flex-1 border border-primaryText rounded-xl container">
-                <div className="text-[32px] font-bold flex items-center justify-center"><p>พรบ.</p></div>
+                <div className="text-[32px] font-bold flex items-center justify-center"><p>{chooseInsuranceWord(transaction?.Transaction.InsuranceType)}</p></div>
                 <div className="space-y-4">
                     <p className="text-[28px]">ข้อมูลรถยนต์</p>
                     <div className="px-6">

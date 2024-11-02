@@ -2,12 +2,16 @@
 import { UserSearch,Check,X } from 'lucide-react';
 
 function HistoryCard(props:any) {
-    console.log(props.status)
+    const chooseInsuranceWord = (category:string)=>{
+        if(category == "0") return "พรบ."
+        else if(category == "1" || category == "2" || category == "3") return `ประกันภัยรถยนต์ชั้น ${category}`
+        else return category
+    }
     return (
         <div className="w-full md:p-5 border border-primaryText bg-primaryBackground rounded-3xl mx-6 md:mx-24 container py-5 cursor-pointer hover:border-4 hover:shadow-2xl hover:scale-105 duration-300 ease-in-out" onClick={props.onClickDetail}>
             <div className="flex flex-col md:flex-row items-center md:space-x-5">
                 <div className="flex-1 md:border-r border-primaryText font-bold md:pr-5 md:mb-0 pb-8 sm:border-b md:border-b-0">
-                    <p className="text-3xl text-primaryText mb-6">{props.category}</p>
+                    <p className="text-3xl text-primaryText mb-6">{chooseInsuranceWord(props.category)}</p>
                     <div className="space-y-2">
                         <p className="text-xl font-bold">{props.carModel}</p>
                         <p className="text-xl font-bold text-secondaryText">{`${props.year} | ${props.miles}`}</p>

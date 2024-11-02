@@ -6,9 +6,10 @@ import OrderSection from "./OrderSection";
 
 function CardAndOwnerDetailCard({transaction}:TransactionWithUndefined){
     const chooseStatusWord = (status:string) => {
+        console.log(status)
         if (status === 'Pending') return 'กำลังดำเนินการ'
         else if (status === 'Approve') return 'ดำเนินการสำเร็จ'
-        else if (status === 'Approve') return 'ถูกปฏิเสธ'
+        else if (status === 'Reject') return 'ถูกปฏิเสธ'
         return 'สถานะไม่ทราบ'; 
     }
     return (
