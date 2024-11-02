@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(header-only)/(transition)/vehicleform", "app/api/pdf-gen.js", "app/api/pdf-gen/route.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(header-only)/(transaction)/vehicleform", "app/api/auth/[...nextauth]/route.ts"],
   "exclude": ["node_modules"]
 }

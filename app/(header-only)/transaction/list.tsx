@@ -26,7 +26,7 @@ export default function List({data} : ListProps){
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
             </div>
-            <ParagraphAnimation className="text-2xl text-primaryText font-bold" content={data}/>
+            <ParagraphAnimation className="text-xl text-primaryText font-medium" content={data}/>
         </div>
     )
 }

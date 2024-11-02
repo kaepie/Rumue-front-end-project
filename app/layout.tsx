@@ -31,11 +31,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="antialiased">
         <SessionProvider session={session}>
-          {children}
+          <body className="antialiased">
+              {children}
+          </body>
         </SessionProvider>
-      </body>
     </html>
   );
 }

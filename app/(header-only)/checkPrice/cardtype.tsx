@@ -23,35 +23,35 @@ export default function CardType({title, list, typeItem, type, setType} : CardTy
     const isInView = useInView(ref, { once: true });
     
     return(
-        <div className={`w-full h-auto border-[1px] ${type === typeItem ? "bg-primaryText" : "bg-primaryBackground"} border-border rounded-xl px-6 pt-6 pb-60 space-y-6`}>
+        <div className={`relative w-full h-auto border-[1px] ${type === typeItem ? "bg-primaryText" : "bg-primaryBackground"} border-border rounded-xl px-6 pt-6 pb-60 space-y-6`}>
             <TextTitleAnimation className={`text-3xl font-bold ${type === typeItem ? "text-primaryBackground" : "text-primaryText"}`} content={title}/>
-            <div className="relative space-y-2">
+            <div className="space-y-2">
                 {list.map((item :any, index :any) => (
                     <List key={index} data={item.data}/>
                 ))}
-                <div className="absolute right-0 -bottom-52">
-                <button 
-                    onClick={() => setType(typeItem)}
-                    className={`flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 ${type === typeItem ? "bg-primaryBackground" : "bg-primaryText"} text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText`}
-                    ref={ref}
-                    style={{
-                        transform: isInView ? "none" : "translateY(20px)",
-                        opacity: isInView ? 1 : 0,
-                        transition: "all 1.5s ease 0.5s",
-                    }}>
-                    {type === typeItem && <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 text-primaryText`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>}
-                    {type !== typeItem ? "เลือก" : ""}
-                </button>
-                </div>
             </div>
+            <div className="absolute right-10 bottom-10">
+                    <button 
+                        onClick={() => setType(typeItem)}
+                        className={`flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 ${type === typeItem ? "bg-primaryBackground" : "bg-primaryText"} text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText`}
+                        ref={ref}
+                        style={{
+                            transform: isInView ? "none" : "translateY(20px)",
+                            opacity: isInView ? 1 : 0,
+                            transition: "all 1.5s ease 0.5s",
+                        }}>
+                        {type === typeItem && <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 text-primaryText`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>}
+                        {type !== typeItem ? "เลือก" : ""}
+                    </button>
+                </div>
         </div>
     );
 
     function List({data} : ListProps){
         return(
-            <div className="flex flex-row gap-2 justify-center items-center">
+            <div className="flex flex-row gap-2 ">
                 <motion.div 
                     animate={{ y: [40, 0], opacity: [0, 1] , scale: [0.95, 1]}}
                     transition={{ ease: "easeOut", duration: 1.2 }}

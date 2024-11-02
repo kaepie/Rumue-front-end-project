@@ -10,12 +10,13 @@ import checkPriceSection2 from "@/public/checkPriceSection2.png";
 import SelectBox from "./selectBox";
 import checkPriceSection3 from "@/public/checkPriceSection3.png";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
-interface SelectItemData {
-  title: string[];
-  type: string[];
-  list: any[];
+interface SelectDataProps {
+    Tree: {
+      [brand: string]: {
+        [model: string]: string[];
+      };
+    };
 }
 
 export default function CheckPrice() {
@@ -34,13 +35,7 @@ export default function CheckPrice() {
   
   
   const [typeData, settypeData] = useState([]);
-
-  const [selectItemData, setSelectItemData] = useState<SelectItemData>({ title: [], type: [], list: [] });
-  interface SelectModelData {
-    [key: string]: any;
-  }
-  
-  const [selectModelData, setSelectModelData] = useState<SelectModelData>({});
+  const [selectData, setSelectData] = useState<SelectDataProps>({ Tree: {} } );
 
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -69,16 +64,16 @@ export default function CheckPrice() {
 
   const typeDataCard4 = [
     {
-        "data":"Up to 50 team members"
+      data:"คุ้มครองค่ารักษาพยาบาลกรณีบาดเจ็บจากอุบัติเหตุ"
     },
     {
-        "data":"Up to 50 team members"
+      data:"ค่าชดเชยกรณีสูญเสียชีวิตหรือทุพพลภาพถาวร"
     },
     {
-        "data":"Up to 50 team members"
+      data: "คุ้มครองเฉพาะความเสียหายที่เกิดกับชีวิตและร่างกาย ไม่คุ้มครองความเสียหายของทรัพย์สิน"
     },
     {
-        "data":"Up to 50 team members"
+      data: "เป็นประกันภาคบังคับที่ผู้ขับขี่ทุกคนต้องมีตามกฎหมาย"
     }
   ];
 
@@ -129,57 +124,49 @@ export default function CheckPrice() {
   }, []);
 
   useEffect(() => {
-    const fetchSelectItemData = async () => {
+    const fetchSelectData = async () => {
       try {
-        const res = await fetch('/json/testSelect.json'); // Adjusted to the correct path
+        const res = await fetch(`http://localhost:3001/insurance`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
-        const SelectItemJson = await res.json();
-        setSelectItemData(SelectItemJson);
+
+        const SelectDataJson = await res.json();
+        setSelectData(SelectDataJson);
+
       } catch (error) {
         console.error("Error loading typeData:", error);
       }
     };
 
-    fetchSelectItemData();
-  }, []);
-
-  useEffect(() => {
-    const fetchSelectModelData = async () => {
-      try {
-        const res = await fetch('/json/selectModel.json'); // Adjusted to the correct path
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const selectModelJson = await res.json();
-        setSelectModelData(selectModelJson);
-      } catch (error) {
-        console.error("Error loading typeData:", error);
-      }
-    };
-
-    fetchSelectModelData();
+    fetchSelectData();
   }, []);
 
   const handleClickShowPrice = () => {
-    router.push(`/showPrice?type=${type}&brand=${brand}&model=${model}&year=${year}&mileage=${mileage}`);
+    console.log(type, brand, model, year, mileage);
+    router.push(`/transaction?type=${type}&brand=${brand}&model=${model}&year=${year}&mileage=${mileage}`);
   }
 
   return (
     <div className="h-auto w-screen">
       {/* Section 1 */}
       <section className="w-screen h-screen flex flex-col justify-center items-center gap-20">
-        <TextTitleAnimation className="text-2xl text-primaryText font-semibold" content="เช็คราคาประกันภัยรถยนต์และพรบ" />
+        <TextTitleAnimation className="text-2xl text-primaryText font-semibold" content="เช็คราคาประกันภัยรถยนต์และพรบ." />
         <div className="flex flex-col justify-center items-center w-full gap-6">
           <TextTitleAnimation className="text-lg text-primaryText" content="ประเภท" />
           
           {/* card select type */}
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-4 gap-6 px-6">
             {typeData.map((item: any, index: number) => (
               <CardType key={index} title={item.title} list={item.list} typeItem={item.type} type={type} setType={setType} />
             ))}
-            <CardType type={type} title="พรบ." list={typeDataCard4} typeItem="PRU" setType={setType} />
+            <CardType type={type} title="พรบ." list={typeDataCard4} typeItem="class0" setType={setType} />
           </div>
 
         </div>
@@ -218,12 +205,27 @@ export default function CheckPrice() {
           <TextTitleAnimation className="text-xl text-primaryText" content="ข้อมูลรถยนต์ของคุณ" />
         </div>
         <div className="flex flex-col items-center gap-8">
-        <SelectBox nameMenu={selectItemData.title[0]} type={selectItemData.type[0]} list={selectItemData.list} isOpen={isBrandOpen} setIsOpen={setIsBrandOpen} value={brand} setValue={setBrand} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
+        {
+          selectData &&(
+            <SelectBox
+            nameMenu="ยี่ห้อ"
+            type="brand"
+            value={brand}
+            setValue={setBrand}
+            isOpen={isBrandOpen}
+            setIsOpen={setIsBrandOpen}
+            list={selectData["Tree"]}
+            handleChangeSelect={handleChangeSelect}
+            handleChangeOpen={handleChangeOpen}
+        />
+          )
+        }
         {brand !== "" && (
-          <SelectBox nameMenu="รุ่น" type="model" list={selectModelData[brand]} isOpen={isModelOpen} setIsOpen={setIsModelOpen} value={model} setValue={setModel} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
-        )}
+            <SelectBox nameMenu="รุ่น" type="model" list={selectData["Tree"][brand]} isOpen={isModelOpen} setIsOpen={setIsModelOpen} value={model} setValue={setModel} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
+          )
+        }
         {brand !== "" && model !== "" && (
-          <SelectBox nameMenu={selectItemData.title[1]} type={selectItemData.type[1]} list={selectItemData.list} isOpen={isYearOpen} setIsOpen={setIsYearOpen} value={year} setValue={setYear} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
+          <SelectBox nameMenu={"ปีรุ่น"} type={"year"} list={selectData["Tree"][brand][model]} isOpen={isYearOpen} setIsOpen={setIsYearOpen} value={year} setValue={setYear} handleChangeSelect={handleChangeSelect} handleChangeOpen={handleChangeOpen}/>
         )}
         </div>
       </section>

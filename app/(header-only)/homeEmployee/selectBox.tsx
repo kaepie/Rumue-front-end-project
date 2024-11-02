@@ -1,12 +1,12 @@
 import { motion, Variants } from "framer-motion";
 
 interface SelectBoxProps {
-    nameMenu: string; // Name of the menu
+    nameMenu: string;
 
-    value: string; // Value ที่เลือก รถ ex. ทะเบียนรถ
-    setValue: (value: string) => void; //set value ที่เลือก รถ ex. ทะเบียนรถ
+    value: string;
+    setValue: (value: string) => void;
     
-    list: any[]; //list ของรถมีอะไรบ้าง
+    list: any[];
 
     isOpen: boolean;
     setIsOpen: (value: boolean) => void;
@@ -28,7 +28,7 @@ export default function SelectBox({nameMenu, value, setValue, isOpen, setIsOpen,
         <motion.nav
           initial={false}
           animate={isOpen ? "open" : "closed"}
-          className="relative w-[160px] flex flex-col gap-2"
+          className="relative w-2/3 flex flex-col gap-2"
         > 
           <motion.button
             whileTap={{ scale: 0.97 }}
@@ -72,13 +72,13 @@ export default function SelectBox({nameMenu, value, setValue, isOpen, setIsOpen,
               }
             }}
             style={{ pointerEvents: isOpen ? "auto" : "none" }}
-            className="z-10 absolute top-14 border-2 h-60 border-border rounded-xl overflow-y-auto bg-primaryBackground w-full"
+            className="z-10 absolute top-14 border-2 h-auto border-border rounded-xl overflow-y-auto bg-primaryBackground w-full"
           >
-            {/* {   
+            {   
                 list.map((item, index) => (    
                     <SelectItem key={index} data={item} handleSelect={handleSelect} />
                 ))
-            } */}
+            }
           </motion.ul>
         </motion.nav>
     );

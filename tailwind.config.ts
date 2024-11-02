@@ -18,7 +18,7 @@ const config: Config = {
         thrBackground: "#F2E4D8", // light color (pale beige)
         primaryButton: "#729DA6", // medium color (blue-gray)
         secondaryButton: "#D8EEF2",
-        primaryButtonHover: "#5B7F86",
+        primaryButtonHover: "#5B7F86", 
       },
     },
   },

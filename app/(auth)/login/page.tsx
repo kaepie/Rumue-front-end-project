@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -12,6 +12,7 @@ export default function Login() {
     errorContent: "",
     errorBoolean: false,
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
   
@@ -42,7 +43,13 @@ export default function Login() {
             errorBoolean: true,
           });
         } else {
-          router.push("/");
+          const session = await getSession();
+
+          if (session?.user.role === "employee") {
+            router.push("/homeEmployee");
+          } else {
+            router.push("/home");
+          }
         }
       }
     } catch (error) {
@@ -52,8 +59,13 @@ export default function Login() {
 
   return (
     <div className="flex h-screen w-screen justify-center items-center py-32 px-4 sm:px-16 md:px-40 lg:px-64 xl:px-96">
-      <div className="flex p-6 sm:p-8 lg:p-10 w-full max-w-lg rounded-lg border-border border-2 bg-primaryBackground">
+      <div className="flex p-6 sm:p-8 lg:p-10 w-full max-w-lg rounded-3xl border-border border-2 bg-primaryBackground">
         <div className="flex flex-col w-full h-full gap-8">
+          <div className="flex flex-row justify-start">
+              <button onClick={() => router.back()}>
+                  <span className="text-primaryText underline"> ย้อนกลับ </span>
+              </button>
+          </div>
           <div className="w-full">
             <h1 className="text-lg sm:text-xl text-primaryText">เข้าสู่ระบบ</h1>
           </div>
@@ -70,22 +82,31 @@ export default function Login() {
                   type="email"
                   required
                   placeholder="Email"
-                  className="border-2 border-border rounded-md p-2 placeholder-secondaryText"
+                  className="border-[1px] border-border rounded-md p-2 text-primaryText placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md"
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-primaryText">Password</label>
-                <input
-                  required
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    sethandleError({ errorContent: "", errorBoolean: false });
-                  }}
-                  value={password}
-                  type="password"
-                  placeholder="Password"
-                  className="border-2 border-border rounded-md p-2 placeholder-secondaryText"
-                />
+                <div className="relative">
+                  <input
+                    required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      sethandleError({ errorContent: "", errorBoolean: false });
+                    }}
+                    value={password}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    className="border-[1px] border-border rounded-md p-2 text-primaryText placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md w-full"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2 top-2.5 text-primaryText text-sm"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
               </div>
             </div>
             <div className="flex justify-center mt-28">

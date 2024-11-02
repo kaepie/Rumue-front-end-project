@@ -29,9 +29,9 @@ export default async function Section3(){
                 <div className="w-full">
                     <TextTitleAnimation content="ทำไมต้องใช้บริการของเรา" className="text-primaryBackground text-5xl font-bold "/>
                 </div>
-                <div className="grid grid-cols-2 rounded-xl overflow-clip">
+                <div className="w-full grid grid-cols-2 rounded-xl overflow-clip">
                     {data.map((item: any, index: any) => (
-                        <CardSection3 key={index} description={item.description} />
+                        <CardSection3 key={index} description={item.description} content={item.content}/>
                     ))}
                 </div>
             </div>
