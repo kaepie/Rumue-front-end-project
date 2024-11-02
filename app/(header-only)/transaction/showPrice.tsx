@@ -4,6 +4,7 @@ import TextTitleAnimation from "@/app/components/TextTitleAnimation";
 import List from "./list";
 import ParagraphAnimation from "@/app/components/ParagraphAnimation";
 import { useEffect, useState } from "react";
+import { m } from "framer-motion";
 
 interface ListShowPriceProps {
     type?: string;
@@ -12,11 +13,17 @@ interface ListShowPriceProps {
     year?: string;
     mileage?: string;
     setState: any;
+
+    price: number;
+    setPrice: any;
+
+    idDuplicate: string;
 }
 
-export default function ShowPrice({type, model, brand, year, mileage, setState}: ListShowPriceProps) {
+export default function ShowPrice({type, model, brand, year, mileage, setState, price}: ListShowPriceProps) {
 
     const [list, setList] = useState<{ [key: string]: any[] }>({});
+
     
     useEffect(() => {
         const fetchListData = async () => {
@@ -34,13 +41,13 @@ export default function ShowPrice({type, model, brand, year, mileage, setState}:
     
         fetchListData();
       }, []);
-
+        
     return (
         <div className="h-auto w-screen flex flex-col justify-center items-center px-72 pb-12 ">
             <div className="container flex flex-col h-fit bg-primaryBackground border-primaryText border-[1px] rounded-2xl py-10 px-12">
                 <div className="w-full flex justify-end">
                     <div className="flex justify-center items-center py-2 px-6 bg-primaryText rounded-3xl">
-                        <TextTitleAnimation content="ราคา" className="text-xl text-primaryBackground"/>
+                        <TextTitleAnimation content={`ราคา ${price} บาท`} className="text-xl text-primaryBackground"/>
                     </div>
                 </div>
                 <div className="mt-10 mb-10">

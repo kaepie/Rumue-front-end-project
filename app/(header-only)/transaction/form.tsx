@@ -20,8 +20,11 @@ interface formProps {
     type: string;
     pattern?: string;
     onInput?: (e: any) => void;
+
+    placeholder1?: string;
+    placeholder2?: string;
 }
-export default function Form({ content1, content2, value1, setValue1, value2, setValue2, errorField1, errorField2, checkErrorFormOnChange, onInput, type, pattern}: formProps) {
+export default function Form({ content1, content2, value1, setValue1, value2, setValue2, errorField1, errorField2, placeholder1, placeholder2, checkErrorFormOnChange, onInput, type, pattern}: formProps) {
     return (
         <div className="flex flex-row gap-20">
             <div className="w-full flex flex-row items-center gap-10">
@@ -32,7 +35,7 @@ export default function Form({ content1, content2, value1, setValue1, value2, se
                         await setValue1(e.target.value);
                         checkErrorFormOnChange();
                     }}
-                    placeholder={content1}
+                    placeholder={placeholder1}
                     type={type}
                     pattern={pattern}
                     onInput={onInput}
@@ -47,7 +50,7 @@ export default function Form({ content1, content2, value1, setValue1, value2, se
                         await setValue2(e.target.value);
                         checkErrorFormOnChange();
                     }}
-                    placeholder={content2}
+                    placeholder={placeholder2}
                     type={type}
                     pattern={pattern}
                     onInput={onInput}

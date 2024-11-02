@@ -52,6 +52,8 @@ interface TransactionDetailsProps {
     "WeightUnlanden": number;
     "WeightLaden": number;
     "TireCount": number;
+    "TotalPiston": number;
+    "Cc": number;
     "CompulsoryInsurancePolicyNumber": string;
     "VoluntaryInsurancePolicyNumber": string;
     "InsuranceType": string;
@@ -112,13 +114,10 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
     // }, [statusTransaction]);
 
     const handleUpdateStatusClick = () => {
-        if (statusTransaction !== transaction.Status && CipNumber !== "" && VipNumber !== "") {
+        if (statusTransaction !== transaction.Status && CipNumber !== "") {
             updateStatusData();
         }
         if (CipNumber === "") {
-            setError(true);
-        }
-        if (VipNumber === "") {
             setError(true);
         }
     }
@@ -198,21 +197,21 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 
                 <div className="flex flex-col justify-center items-center h-80 w-full gap-2">
                     <div className="w-full flex flex-col">
-                        <ParagraphAnimation content={"เลขกรมธรรม์"} className="text-primaryText w-1/3" />
+                        <ParagraphAnimation content={"เลขกรมธรรม์ของพรบ."} className="text-primaryText w-1/3" />
                         <input
                             value={CipNumber}
                             onChange={(e) => setCipNumber(e.target.value)}
-                            placeholder={"เลขกรมธรรม์"}
+                            placeholder={"เลขกรมธรรม์ของพรบ."}
                             type="text"
                             className={`w-full h-14 text-primaryText rounded-xl p-3 border-2  placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`}
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <ParagraphAnimation content={"เลขพรบ."} className="text-primaryText w-1/3" />
+                        <ParagraphAnimation content={"เลขกรมธรรม์ของประกัน"} className="text-primaryText w-1/3" />
                         <input
                             value={VipNumber}
                             onChange={(e) => setVipNumber(e.target.value)}
-                            placeholder={"เลขพรบ."}
+                            placeholder={"เลขกรมธรรม์ของประกัน"}
                             type="text"
                             className={`w-full h-14 text-primaryText rounded-xl p-3 border-2 placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`}
                         />
@@ -326,11 +325,11 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                     </div>
                     <div className="flex justify-between border-b-[1px] py-2 border-border">
                         <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="จำนวน(สูบ)" />
-                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`4`} />
+                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${vehicle.TotalPiston}`} />
                     </div>
                     <div className="flex justify-between border-b-[1px] py-2 border-border">
                         <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="ซีซี" />
-                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`cc`} />
+                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${vehicle.Cc}`} />
                     </div>
                     <div className="flex justify-between border-b-[1px] py-2 border-border">
                         <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="แรงม้า" />
@@ -349,8 +348,8 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                         <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${vehicle.WeightLaden}`} />
                     </div>
                     <div className="flex justify-between border-b-[1px] py-2 border-border">
-                        <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="จำนวนล้อ จำนวนยาง" />
-                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${vehicle.TireCount} ${vehicle.WheelType}`} />
+                        <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="ประเภทยาง" />
+                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${vehicle.WheelType}`} />
                     </div>
                     
                 </div>

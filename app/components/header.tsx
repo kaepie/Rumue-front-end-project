@@ -54,15 +54,6 @@ export default function Header() {
                   scale: 1.1,
                   transition: { duration: 0.5 }
                 }}>
-                  <Link href="/history" 
-                        className={`relative ${isActive("/history") ? "active-link" : ""} hover:hover-link`}>
-                    ประวัติ
-                  </Link>
-                </motion.li>
-                <motion.li whileHover={{
-                  scale: 1.1,
-                  transition: { duration: 0.5 }
-                }}>
                   <Link href="/contact" 
                         className={`relative ${isActive("/contact") ? "active-link" : ""} hover:hover-link`}>
                     ติดต่อ
@@ -89,6 +80,15 @@ export default function Header() {
                 {
                   session && (
                     <>
+                      <motion.li whileHover={{
+                        scale: 1.1,
+                        transition: { duration: 0.5 }
+                      }}>
+                        <Link href="/history" 
+                              className={`relative ${isActive("/history") ? "active-link" : ""} hover:hover-link`}>
+                          ประวัติ
+                        </Link>
+                      </motion.li>
                       <li>
                         <Link href="/profile" className="relative">โปรไฟล์</Link>
                       </li>
@@ -111,16 +111,6 @@ export default function Header() {
             <motion.li whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}>
               <Link href="/homeEmployee" className={`relative hover:hover-link ${isActive("/employee/home") ? "active-link" : ""}`}>
                 หน้าแรก
-              </Link>
-            </motion.li>
-            <motion.li whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}>
-              <Link href="/employeeInfo" className={`relative ${isActive("/employee/employeeInfo") ? "active-link" : ""} hover:hover-link`}>
-                โปรไฟล์ของพนักงาน
-              </Link>
-            </motion.li>
-            <motion.li whileHover={{ scale: 1.1, transition: { duration: 0.5 } }}>
-              <Link href="/home" className={`relative ${isActive("/employee/home") ? "active-link" : ""} hover:hover-link`}>
-                ประวัติรายการที่จัดการ
               </Link>
             </motion.li>
             {/* {session && ( */}

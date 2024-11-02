@@ -65,7 +65,9 @@ export default function HomePage() {
     "VehicleNumberLocation": "",
     "EngineBrand": "",
     "EngineNumberLocation": "",
-    "WheelType": ""
+    "WheelType": "",
+    "TotalPiston": 0,
+    "Cc": 0
   });
   const [openDetail, setOpenDetail] = useState(false);
   const [updateStatus, setUpdateStatus] = useState(false);

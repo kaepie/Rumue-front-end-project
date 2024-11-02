@@ -7,7 +7,7 @@ import Payment from "./payment";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface VehicleData {
     id: string;
@@ -54,7 +54,7 @@ export default function vehicleform() {
     const [mileage , setMileage] = useState(searchParams.get("mileage"));
 
     const [state, setState] = useState("showPrice");
-    const [id, setId] = useState<string>(""); // string
+    const [ID, setId] = useState<string>(""); // string
     const [registrationDate, setRegistrationDate] = useState<string>(""); // string
     const [registrationNumber, setRegistrationNumber] = useState<string>(""); // string
     const [province, setProvince] = useState<string>(""); // string
@@ -101,6 +101,8 @@ export default function vehicleform() {
     const [weightLadenDuplicate, setWeightLadenDuplicate] = useState<number>(0); // number
     const [totalPistonDuplicate, setTotalPistonDuplicate] = useState<number>(0); // number
     const [filePreviewUrlDuplicate, setFilePreviewUrlDuplicate] = useState<string | null>(null); // string | null
+
+    const [price, setPrice] = useState<number>(0.0); // number
 
     useEffect(() => {
         console.log("idDuplicate:", idDuplicate);
@@ -176,7 +178,7 @@ export default function vehicleform() {
         try {
         const token = session?.user.token;
         const json = {
-            Price: 0.0,
+            Price: price,
             InsuranceType: type,
             Status: "pending",
             ESlipImageUrl: fileSlipUrl,
@@ -204,7 +206,51 @@ export default function vehicleform() {
     };
 
     const checkDuplicate = () => {
-        if (id === idDuplicate && registrationDate === registrationDateDuplicate && registrationNumber === registrationNumberDuplicate && province === provinceDuplicate && vehicleType === vehicleTypeDuplicate && vehicleCategory === vehicleCategoryDuplicate && characteristics === characteristicsDuplicate && vehicleColor === vehicleColorDuplicate && vehicleNumber === vehicleNumberDuplicate && vehicleNumberLocation === vehicleNumberLocationDuplicate && engineNumber === engineNumberDuplicate && engineNumberLocation === engineNumberLocationDuplicate && engineBrand === engineBrandDuplicate && fuelType === fuelTypeDuplicate && cc === ccDuplicate && wheelType === wheelTypeDuplicate && chasisNumber === chasisNumberDuplicate && horsePower === horsePowerDuplicate && seatingCapacity === seatingCapacityDuplicate && weightUnladen === weightUnladenDuplicate && weightLaden === weightLadenDuplicate && totalPiston === totalPistonDuplicate && filePreviewUrl === filePreviewUrlDuplicate) {
+
+        console.log("idDuplicate",idDuplicate);
+        console.log("registrationDate: ", registrationDate, "registrationDateDuplicate: ", registrationDateDuplicate);
+        console.log("registrationNumber: ", registrationNumber, "registrationNumberDuplicate: ", registrationNumberDuplicate);
+        console.log("province: ", province, "provinceDuplicate: ", provinceDuplicate);
+        console.log("vehicleType: ", vehicleType, "vehicleTypeDuplicate: ", vehicleTypeDuplicate);
+        console.log("vehicleCategory: ", vehicleCategory, "vehicleCategoryDuplicate: ", vehicleCategoryDuplicate);
+        console.log("characteristics: ", characteristics, "characteristicsDuplicate: ", characteristicsDuplicate);
+        console.log("vehicleColor: ", vehicleColor, "vehicleColorDuplicate: ", vehicleColorDuplicate);
+        console.log("vehicleNumber: ", vehicleNumber, "vehicleNumberDuplicate: ", vehicleNumberDuplicate);
+        console.log("vehicleNumberLocation: ", vehicleNumberLocation, "vehicleNumberLocationDuplicate: ", vehicleNumberLocationDuplicate);
+        console.log("engineNumber: ", engineNumber, "engineNumberDuplicate: ", engineNumberDuplicate);
+        console.log("engineNumberLocation: ", engineNumberLocation, "engineNumberLocationDuplicate: ", engineNumberLocationDuplicate);
+        console.log("engineBrand: ", engineBrand, "engineBrandDuplicate: ", engineBrandDuplicate);
+        console.log("fuelType: ", fuelType, "fuelTypeDuplicate: ", fuelTypeDuplicate);
+        console.log("cc: ", cc, "ccDuplicate: ", ccDuplicate);
+        console.log("wheelType: ", wheelType, "wheelTypeDuplicate: ", wheelTypeDuplicate);
+        console.log("chasisNumber: ", chasisNumber, "chasisNumberDuplicate: ", chasisNumberDuplicate);
+        console.log("horsePower: ", horsePower, "horsePowerDuplicate: ", horsePowerDuplicate);
+        console.log("seatingCapacity: ", seatingCapacity, "seatingCapacityDuplicate: ", seatingCapacityDuplicate);
+        console.log("weightUnladen: ", weightUnladen, "weightUnladenDuplicate: ", weightUnladenDuplicate);
+        console.log("weightLaden: ", weightLaden, "weightLadenDuplicate: ", weightLadenDuplicate);
+        console.log("totalPiston: ", totalPiston, "totalPistonDuplicate: ", totalPistonDuplicate);
+
+        if (registrationDate === registrationDateDuplicate &&
+            registrationNumber === registrationNumberDuplicate &&
+            province === provinceDuplicate &&
+            vehicleType === vehicleTypeDuplicate &&
+            vehicleCategory === vehicleCategoryDuplicate &&
+            characteristics === characteristicsDuplicate &&
+            vehicleColor === vehicleColorDuplicate &&
+            vehicleNumber === vehicleNumberDuplicate &&
+            vehicleNumberLocation === vehicleNumberLocationDuplicate &&
+            engineNumber === engineNumberDuplicate &&
+            engineNumberLocation === engineNumberLocationDuplicate &&
+            engineBrand === engineBrandDuplicate &&
+            fuelType === fuelTypeDuplicate &&
+            cc === ccDuplicate &&
+            wheelType === wheelTypeDuplicate &&
+            chasisNumber === chasisNumberDuplicate &&
+            horsePower === horsePowerDuplicate &&
+            seatingCapacity === seatingCapacityDuplicate &&
+            weightUnladen === weightUnladenDuplicate &&
+            weightLaden === weightLadenDuplicate &&
+            totalPiston === totalPistonDuplicate) {
             return true;
         }
         return false;
@@ -215,12 +261,14 @@ export default function vehicleform() {
     const clickSubmit = async () => {
         // console.log("weightUnladen: ",weightUnladen);
         if (checkDuplicate()) {
-            createTransaction(id);
+            createTransaction(idDuplicate);
+            // console.log("Duplicate");
         }
         else {
             const vehicleID = await createVehicle();
             if ( vehicleID ) {
                 createTransaction(vehicleID);
+                // console.log("Not Duplicate");
             }
         }
         router.push("/home");
@@ -238,20 +286,122 @@ export default function vehicleform() {
         }
     },[status]);
 
+    const [mileRate, setMileRate] = useState<number>(0.0);
+    const [priorityRate, setPriorityRate] = useState<number>(0.0);
+    const [insurancePrice, setInsurancePrice] = useState<number>(0.0);
+
+    const fetchMileRateData = async () => {
+        try {
+            if (mileage === null) {
+            return;
+    
+            }
+            const res = await fetch(`http://localhost:3001/mile/${parseFloat(mileage) >= 20000 ? "extra" : parseFloat(mileage) >= 15000 ? "high" : parseFloat(mileage) >= 10000 ? "mid" : parseFloat(mileage) >= 5000 ? "low" : "boundary"}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+    
+            if (!res.ok) {
+            throw new Error('Network response was not ok');
+            }
+    
+            const data = await res.json();
+            const mileRateData = await data.rate;
+            setMileRate(mileRateData);
+    
+            return mileRateData;
+    
+        } catch (error) {
+            console.error("Error loading typeData:", error);
+        }
+        };
+    
+          const fetchPriorityRateData = async () => {
+            try {
+              if (type === null) {
+                return;
+    
+              }
+              const res = await fetch(`http://localhost:3001/priority/${type === "class0" ? 0 : type === "class1" ? 1 : type === "class2" ? 2 : 3}`, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              });
+      
+              if (!res.ok) {
+                throw new Error('Network response was not ok');
+              }
+      
+              const data = await res.json();
+              const priorityRateData = await data.rate;
+              setPriorityRate(priorityRateData);
+              
+              return priorityRateData;
+            } catch (error) {
+              console.error("Error loading typeData:", error);
+            }
+          };
+    
+          const fetchInsurancePriceData = async () => {
+            try {
+              const res = await fetch(`http://localhost:3001/insurance`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  Brand: brand,
+                  Model: model,
+                  Year: year,
+              }) 
+              });
+      
+              if (!res.ok) {
+                throw new Error('Network response was not ok');
+              }
+      
+              const data = await res.json();
+              const insurancePriceData = await data.price
+              setInsurancePrice(insurancePriceData);
+              
+              return insurancePriceData;
+            } catch (error) {
+              console.error("Error loading typeData:", error);
+            }
+          };
+    
+          
+          const fetchPrice = async () => {
+            const mileRateData = await fetchMileRateData();
+            const priorityRateData = await fetchPriorityRateData();
+            const insurancePriceData = await fetchInsurancePriceData();
+    
+            console.log(mileRateData, priorityRateData, insurancePriceData);
+            const total = await insurancePriceData * (mileRateData + priorityRateData);
+            setPrice(total);
+        }
+    
+        useEffect(() => {
+            fetchPrice();
+        }, [mileRate, priorityRate, insurancePrice, idDuplicate]);
+
     return(
         <div className="flex flex-col justify-center items-center h-auto w-screen">
             <VehicleProgressBar currentPath={state}/>
 
             {/* showPrice section */}
             { state === "showPrice" && (
-                <ShowPrice setState={setState} type={type!} model={model!} brand={brand!} year={year!} mileage={mileage!}/>
+                <ShowPrice setState={setState} type={type!} model={model!} brand={brand!} year={year!} mileage={mileage!} setPrice={setPrice} price={price} idDuplicate={idDuplicate}/>
             )}
 
             {/* vehicleform section */}
             { state === "vehicleform" && (
                 <VehicleForm 
                     setState={setState} 
-                    id={id} 
+                    ID={ID} 
                     setId={setId} 
                     filePreview={filePreview} 
                     setFilePreview={setFilePreview} 
@@ -334,7 +484,7 @@ export default function vehicleform() {
 
             {/* payment section */}
             { state === "payment" && (
-                <Payment setState={setState} type={type || ''} fileSlipPreview={fileSlipPreview} setFileSlipPreview={setFileSlipPreview} fileSlipUrl={fileSlipUrl} setFileSlipUrl={setFileSlipUrl} clickSubmit={clickSubmit}/>
+                <Payment setState={setState} type={type || ''} fileSlipPreview={fileSlipPreview} setFileSlipPreview={setFileSlipPreview} fileSlipUrl={fileSlipUrl} setFileSlipUrl={setFileSlipUrl} clickSubmit={clickSubmit} price={price}/>
             )}
 
         </div>

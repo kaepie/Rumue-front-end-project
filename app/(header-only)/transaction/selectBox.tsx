@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 interface SelectItemProps{
   data: {
-    "Id": string,
+    "ID": string,
     "RegistrationDate": string,
     "RegistrationNumber": string,
     "Province": string,
@@ -39,7 +39,7 @@ interface SelectItemProps{
 }
 interface setVehicleFormProps {
   data: {
-    "Id": string,
+    "ID": string,
     "RegistrationDate": string,
     "RegistrationNumber": string,
     "Province": string,
@@ -83,7 +83,7 @@ interface SelectBoxProps {
     isOpen: boolean;
     setIsOpen: (value: boolean) => void;
 
-    id: string;
+    ID: string;
     setId: (value: string) => void;
     registrationDate: string;
     setRegistrationDate: (value: string) => void;
@@ -226,7 +226,7 @@ export default function SelectBox({
       
       const date = setVehicleFormProps.RegistrationDate
       const dateSplit = date.split("T")[0];
-      setId(setVehicleFormProps.Id);
+      setId(setVehicleFormProps.ID);
       setRegistrationDate(dateSplit);
       setRegistrationNumber(setVehicleFormProps.RegistrationNumber);
       setProvince(setVehicleFormProps.Province);
@@ -249,7 +249,8 @@ export default function SelectBox({
       setWeightLaden(setVehicleFormProps.WeightLaden);
       setTotalPiston(setVehicleFormProps.TotalPiston);
 
-      setIdDuplicate(setVehicleFormProps.Id);
+
+      setIdDuplicate(setVehicleFormProps.ID);
       setRegistrationNumberDuplicate(setVehicleFormProps.RegistrationNumber);
       setProvinceDuplicate(setVehicleFormProps.Province);
       setVehicleTypeDuplicate(setVehicleFormProps.VehicleType);
@@ -267,7 +268,7 @@ export default function SelectBox({
       setChasisNumberDuplicate(setVehicleFormProps.ChasisNumber);
       setHorsePowerDuplicate(setVehicleFormProps.HorsePower);
       setSeatingCapacityDuplicate(setVehicleFormProps.SeatingCapacity);
-      setWeightUnladenDuplicate(setVehicleFormProps.WeightLanden);
+      setWeightUnladenDuplicate(setVehicleFormProps.WeightUnlanden);
       setWeightLadenDuplicate(setVehicleFormProps.WeightLaden);
       setTotalPistonDuplicate(setVehicleFormProps.TotalPiston);
       setFilePreviewUrlDuplicate(setVehicleFormProps.ESlipImageUrl);

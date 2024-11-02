@@ -15,9 +15,10 @@ interface PaymentProps {
     type: string;
     setState: any;
     clickSubmit: any;
+    price: number;
 }
 
-export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUrl, setFileSlipUrl, type, setState, clickSubmit}: PaymentProps){
+export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUrl, setFileSlipUrl, type, price, setState, clickSubmit}: PaymentProps){
     const [list, setList] = useState<{ [key: string]: any[] }>({});
     const fileInput = useRef<HTMLInputElement>(null);
     const [hasError, setHasError] = useState(false);
@@ -122,7 +123,7 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
                         ))}
                     </div>
                     <div className="h-32 w-full border-[1px] border-thrBackground bg-primaryBackground flex justify-center items-center rounded-3xl">
-                        <TextTitleAnimation content="10000 บาท/ปี" className="text-primaryText text-2xl font-black"/>
+                        <TextTitleAnimation content={`${price} บาท`} className="text-primaryText text-2xl font-black"/>
                     </div>
                 </div> 
 

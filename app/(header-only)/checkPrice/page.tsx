@@ -157,7 +157,7 @@ export default function CheckPrice() {
     <div className="h-auto w-screen">
       {/* Section 1 */}
       <section className="w-screen h-screen flex flex-col justify-center items-center gap-20">
-        <TextTitleAnimation className="text-2xl text-primaryText font-semibold" content="เช็คราคาประกันภัยรถยนต์และพรบ" />
+        <TextTitleAnimation className="text-2xl text-primaryText font-semibold" content="เช็คราคาประกันภัยรถยนต์และพรบ." />
         <div className="flex flex-col justify-center items-center w-full gap-6">
           <TextTitleAnimation className="text-lg text-primaryText" content="ประเภท" />
           

@@ -16,7 +16,7 @@ interface VehicleFormProps {
     setFilePreview: any;
     setState: any;
 
-    id: string;
+    ID: string;
     setId: any;
     
     registrationDate: string;
@@ -127,7 +127,7 @@ export default function VehicleForm({
     setType,
 
     filePreview,
-    id,
+    ID,
     setId,
     setFilePreview,
     registrationDate,
@@ -205,7 +205,6 @@ export default function VehicleForm({
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [list, setList] = useState([]);
 
-    
     const fileInput = useRef<HTMLInputElement>(null);
     const [checkError, setCheckError] = useState<boolean>(false);
     const { data: session, status } = useSession();
@@ -583,7 +582,7 @@ export default function VehicleForm({
                             </div>
                             {
                                 <SelectBox nameMenu="เลือก" list={list ? list : []} isOpen={isOpen} setIsOpen={setIsOpen} value={value} setValue={setValue} 
-                                    id={id} 
+                                    ID={ID} 
                                     setId={setId} 
                                     setType={setType}
                                     setBrand={setBrand}
@@ -670,7 +669,7 @@ export default function VehicleForm({
                                 name={"registrationNumber"}
                                 value={registrationNumber}
                                 onChange={(e) => {setRegistrationNumber(e.target.value);checkErrorFormOnChange();}}
-                                placeholder={"เลขทะเบียน"}
+                                placeholder={"เช่น กข1234"}
                                 type="text"
                                 className={`w-full h-14 text-primaryText rounded-xl p-3 border-2 ${errorRegistrationNumber ? "border-red-500" : "border-primaryText"} placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`}
                             />
@@ -688,6 +687,8 @@ export default function VehicleForm({
                             errorField2={errorVehicleColor}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
+                            placeholder1="เช่น กรุงเทพมหานคร"
+                            placeholder2="เช่น ขาว"
                         />
 
                         {/* row 3 */}
@@ -702,6 +703,8 @@ export default function VehicleForm({
                             errorField2={errorCharacteristics}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
+                            placeholder1="เช่น 1"
+                            placeholder2="เช่น เก๋งสองตอน"  
                         />
 
                         {/* row 4 */}
@@ -711,7 +714,7 @@ export default function VehicleForm({
                                 name={"vehicleType"}
                                 value={vehicleType}
                                 onChange={(e) => {setVehicleType(e.target.value);checkErrorFormOnChange();}}
-                                placeholder={"ประเภท"}
+                                placeholder={"เช่น รถยนต์นั่งส่วนบุคคลไม่เกิน 7 คน"}
                                 type="text"
                                 className={`w-full h-14 text-primaryText rounded-xl p-3 border-2 ${errorVehicleType ? "border-red-500" : "border-primaryText"} placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`}
                             />
@@ -729,6 +732,8 @@ export default function VehicleForm({
                             errorField2={errorVehicleNumberLocation}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
+                            placeholder1="เช่น AB12345678"
+                            placeholder2="เช่น ใต้เบาะคนขับ"
                         />
 
                         {/* row 6 */}
@@ -743,6 +748,8 @@ export default function VehicleForm({
                             errorField2={errorEngineNumber}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
+                            placeholder1="เช่น Toyota"
+                            placeholder2="เช่น QEQ-123456789"
                         />
 
                         {/* row 7 */}
@@ -757,6 +764,8 @@ export default function VehicleForm({
                             errorField2={errorFuelType}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
+                            placeholder1="เช่น ใต้ฝากระโปรงหน้า"
+                            placeholder2="เช่น เบนซิน"
                         />
 
                         {/* row 8 */}
@@ -771,6 +780,8 @@ export default function VehicleForm({
                             errorField2={errorWheelType}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
+                            placeholder1="เช่น 987654321"
+                            placeholder2="เช่น ล้อแม็ก"
                         />
 
                         {/* row 9 */}
@@ -786,12 +797,14 @@ export default function VehicleForm({
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
                             onInput={(e :any) => e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '')}
+                            placeholder1="เช่น 4"
+                            placeholder2="เช่น 1500"
                         />
 
                         {/* row 10 */}
                         <Form
-                            content1="แรงม้า"
-                            content2="จำนวนที่นั่ง"
+                            content1="แรงม้า (แรงม้า)"
+                            content2="จำนวนที่นั่ง (ที่นั่ง)"
                             value1={horsePower}
                             value2={seatingCapacity}
                             setValue1={setHorsePower}
@@ -801,12 +814,14 @@ export default function VehicleForm({
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"text"}
                             onInput={(e :any) => e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '')}
+                            placeholder1="เช่น 150"
+                            placeholder2="เช่น 5"
                         />
 
                         {/* row 11 */}
                         <Form
-                            content1="น้ำหนักรถ"
-                            content2="น้ำหนักรถรวม"
+                            content1="น้ำหนักรถ (กก.)"
+                            content2="น้ำหนักรถรวม (กก.)"
                             value1={weightUnladen}
                             value2={weightLaden}
                             setValue1={setWeightUnladen}
@@ -815,6 +830,8 @@ export default function VehicleForm({
                             errorField2={errorWeightLaden}
                             checkErrorFormOnChange={checkErrorFormOnChange}
                             type={"number"}
+                            placeholder1="เช่น 1200"
+                            placeholder2="เช่น 1500"
                         />
                         <div className="flex flex-row justify-center gap-2">
                             <div className="w-full flex flex-col gap-6">
