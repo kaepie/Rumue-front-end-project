@@ -4,7 +4,7 @@ import PasswordEditCard from "./PasswordEditCard";
 import { UserWithUndefined } from "../(header-only)/interface/interface";
 import ProfileEditCard from "./ProfileEditCard";
 
-function ProfileCard({ user }: UserWithUndefined) {
+function ProfileCard({ user, setOnclickUpdate }: UserWithUndefined) {
     const [showPasswordEdit, setShowPasswordEdit] = useState(false);
     const [onClickEditDetail, setOnClickEditDetail] = useState(false)
 
@@ -73,7 +73,7 @@ function ProfileCard({ user }: UserWithUndefined) {
             </div>
             {onClickEditDetail &&
                 <div className="px-56 py-24 flex items-center justify-center">
-                    <ProfileEditCard Email={user?.Email} Fname={user?.Fname} Lname={user?.Lname} PhoneNumber={user?.PhoneNumber} Address={user?.Address} Nationality={user?.Nationality} BirthDate={user?.BirthDate} CitizenID={user?.CitizenID} onClickEdit={routeToProfileEdit}></ProfileEditCard>
+                    <ProfileEditCard Email={user?.Email} Fname={user?.Fname} Lname={user?.Lname} PhoneNumber={user?.PhoneNumber} Address={user?.Address} Nationality={user?.Nationality} BirthDate={user?.BirthDate} CitizenID={user?.CitizenID} onClickEdit={routeToProfileEdit} setOnclickUpdate={setOnclickUpdate} setOnClickEditDetail={setOnClickEditDetail}></ProfileEditCard>
                 </div>
             }
         </>

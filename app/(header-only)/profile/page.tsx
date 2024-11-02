@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 export default function Profile() {
     const [user, setUser] = useState<User>()
     const { data: session } = useSession();
-    const [onClickUpdate, setOnclickUpdate] = useState("")
+    const [onClickUpdate, setOnclickUpdate] = useState(false)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -32,7 +32,7 @@ export default function Profile() {
 
         fetchData();
 
-    }, []);
+    }, [session, onClickUpdate]);
 
     return (
         <div className="flex items-center justify-center h-screen">
