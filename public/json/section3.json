@@ -1,14 +1,18 @@
 [
     {
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatem tempore id voluptate ea! Ullam dicta accusantium quo a, quod nihil officiis saepe eligendi, ducimus ratione nulla animi tempore vel!"
+        "content": "99%",
+        "description": "สถิติความพึงพอใจของลูกค้า"
     },
     {
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatem tempore id voluptate ea! Ullam dicta accusantium quo a, quod nihil officiis saepe eligendi, ducimus ratione nulla animi tempore vel!"
+        "content": "20,000",
+        "description": "จำนวนลูกค้าที่ใช้งานอยู่"
     },
     {
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatem tempore id voluptate ea! Ullam dicta accusantium quo a, quod nihil officiis saepe eligendi, ducimus ratione nulla animi tempore vel!"
+        "content": "10+",
+        "description": "จำนวนทีมงานให้บริการ"
     },
     {
-        "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptatem tempore id voluptate ea! Ullam dicta accusantium quo a, quod nihil officiis saepe eligendi, ducimus ratione nulla animi tempore vel!"
+        "content": "<5 นาที",
+        "description": "ระยะเวลาการตอบสนอง"
     }
 ]
