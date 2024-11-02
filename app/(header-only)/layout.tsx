@@ -17,8 +17,8 @@ export default async function HeaderOnlyLayout({
 
   return (
     <RootLayout>
-        <Header />
-        {children}
+      <Header />
+      {children}
     </RootLayout>
   );
 }

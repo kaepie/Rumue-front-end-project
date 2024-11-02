@@ -18,6 +18,7 @@ function FileAndImgHistoryCard({transaction}:TransactionWithUndefined){
     }
 
     const GenPDF = async()=> {
+        console.log(transaction?.Transaction.Price)
         const response = await fetch("/api/pdf-gen",{
             method: 'POST',
             headers: {

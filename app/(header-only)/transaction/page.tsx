@@ -280,12 +280,6 @@ export default function vehicleform() {
         }
     }, [type, model, brand, year, mileage]);
 
-    useEffect(() => {
-        if (status === "unauthenticated") {
-            router.push("/login");
-        }
-    },[status]);
-
     const [mileRate, setMileRate] = useState<number>(0.0);
     const [priorityRate, setPriorityRate] = useState<number>(0.0);
     const [insurancePrice, setInsurancePrice] = useState<number>(0.0);
