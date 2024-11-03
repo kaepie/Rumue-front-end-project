@@ -135,9 +135,7 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                         body: formData,
                     });
 
-                    const result = await resEmail.json();
-
-                    if (result.ok) {
+                    if (resEmail.ok) {
                         setUpdateStatus(true);
                         setTimeout(() => {
                             setUpdateStatus(false);
@@ -148,7 +146,7 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         }, 1000);
                     } else {
-                        console.error('Failed to send email:', result);
+                        console.error('Failed to send email');
                     }
                 } else {
                     console.error('Failed to generate PDF:', receiptFileResponse.statusText);
