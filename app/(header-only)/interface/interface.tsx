@@ -51,6 +51,7 @@ export interface Transaction {
     VipNumber: string;
     CreatedAt: string;
     UpdatedAt: string;
+    ReceiptDate: string;
 }
 
 export interface TransactionData {

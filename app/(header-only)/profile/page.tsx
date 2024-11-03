@@ -34,6 +34,7 @@ export default function Profile() {
 
     }, [session, onClickUpdate]);
 
+    console.log(user);
     return (
         <div className="flex items-center justify-center h-screen">
             <ProfileCard user={user} setOnclickUpdate={setOnclickUpdate} />

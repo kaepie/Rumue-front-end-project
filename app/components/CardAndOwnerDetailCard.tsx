@@ -8,9 +8,14 @@ function CardAndOwnerDetailCard({transaction}:TransactionWithUndefined){
     const chooseStatusWord = (status:string) => {
         console.log(status)
         if (status === 'pending') return 'กำลังดำเนินการ'
-        else if (status === 'approve') return 'ดำเนินการสำเร็จ'
-        else if (status === 'reject') return 'ถูกปฏิเสธ'
+        else if (status === 'approved') return 'ดำเนินการสำเร็จ'
+        else if (status === 'rejected') return 'ถูกปฏิเสธ'
         return 'สถานะไม่ทราบ'; 
+    }
+
+    const spliteTime = (time:string) => {
+        const timeArray = time.split('T')
+        return timeArray[0]
     }
     return (
         <div className="flex flex-col gap-8 ">
@@ -19,7 +24,11 @@ function CardAndOwnerDetailCard({transaction}:TransactionWithUndefined){
                 <p className="text-[30px] font-bold">สถานะ:&nbsp;</p>
                 <p className="text-primaryText text-[36px] font-bold">{transaction?.Transaction.Status ? chooseStatusWord(transaction.Transaction.Status) : 'ไม่ระบุสถานะ'}</p>
             </div>
-            <div className="2xl:flex gap-8 2xl:space-y-0 space-y-4"> 
+            <div className="flex justify-center items-center">
+                <p className="text-[24px] font-bold">เวลาออกใบเสร็จ:&nbsp;</p>
+                <p className="text-primaryText text-[26px] font-bold">{transaction?.Transaction.ReceiptDate === "0001-01-01T00:00:00Z" ? "ไม่ระบุเวลา" : spliteTime(transaction!.Transaction.ReceiptDate) }</p>
+            </div>
+                <div className="2xl:flex gap-8 2xl:space-y-0 space-y-4"> 
                 <CarDetailCard transaction={transaction}></CarDetailCard>
                 <OrderSection transaction={transaction}></OrderSection>
                 <FileAndImgHistoryCard transaction={transaction}></FileAndImgHistoryCard>
