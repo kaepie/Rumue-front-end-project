@@ -56,7 +56,10 @@ function FileAndImgHistoryCard({transaction}:TransactionWithUndefined){
                         objectFit: 'fill',
                     }}
                 />
-            <button className="bg-primaryButton text-white rounded-lg py-4 px-6 hover:bg-primaryButtonHover duration-300 ease-in-out font-bold text-xl" onClick={GenPDF}>พิมพ์ใบแจ้งหนี้</button>
+            {/* {   transaction?.Transaction.Status === 'approved' && (
+                <button className="bg-primaryButton text-white rounded-lg py-4 px-6 hover:bg-primaryButtonHover duration-300 ease-in-out font-bold text-xl" onClick={GenPDF}>พิมพ์ใบแจ้งหนี้</button>
+                )
+            } */}
         </div>
     </div>
     );

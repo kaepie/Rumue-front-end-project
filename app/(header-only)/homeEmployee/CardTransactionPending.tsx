@@ -1,18 +1,3 @@
-import React from 'react';
-
-// interface TransactionCardProps {
-//   transactionId: string;
-//   type: string;
-//   creationDate: string;
-//   status: string;
-//   brand: string;
-//   model: string;
-//   year: string;
-//   chassisNumber: string;
-// }
-
-// {transactionId, type, creationDate, status, brand, chassisNumber, model, year}: TransactionCardProps
-
 interface TransactionCardProps {
   transaction: {
     "CipNumber": string;

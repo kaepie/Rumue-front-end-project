@@ -175,7 +175,7 @@ export default function Signup() {
           lname: trimmedData.lname,
           password,
           phoneNumber: trimmedData.phoneNumber,
-          address: `${trimmedData.number}, ${trimmedData.valley}, ${trimmedData.soi}, ${trimmedData.route}, ${trimmedData.province}, ${trimmedData.district}, ${trimmedData.subDistrict}, ${trimmedData.postalCode}`,
+          address: `${trimmedData.number}| ${trimmedData.valley}| ${trimmedData.soi}| ${trimmedData.route}| ${trimmedData.province}| ${trimmedData.district}| ${trimmedData.subDistrict}| ${trimmedData.postalCode}`,
           nationality,
           birthDate: trimmedData.date,
           citizenID,

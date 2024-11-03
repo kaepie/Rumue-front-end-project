@@ -71,10 +71,9 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
                 body: formData,
             });
             const result = await response.json();
-            console.log(result);
 
             // Generate a preview URL
-            const previewUrl = `/uploads/${file.name}`;
+            const previewUrl = `/uploads/${result.path}`;
 
             await setFileSlipUrl(previewUrl);
             return false;
@@ -96,7 +95,6 @@ export default function Payment({fileSlipPreview, setFileSlipPreview, fileSlipUr
             const name = fileInput.current?.files?.[0].name;
             const previewUrl = `/uploads/${name}`;
             setFileSlipUrl(previewUrl);
-            console.log("fileSlipUrl: ",fileSlipUrl);
         }
     }, [fileSlipUrl, uploadFile, fileInput]);
 

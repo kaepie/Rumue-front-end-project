@@ -74,9 +74,9 @@ export default function SelectBox({nameMenu, value, setValue, isOpen, setIsOpen,
             style={{ pointerEvents: isOpen ? "auto" : "none" }}
             className="z-10 absolute top-14 border-2 h-auto border-border rounded-xl overflow-y-auto bg-primaryBackground w-full"
           >
-            {   
-                list.map((item, index) => (    
-                    <SelectItem key={index} data={item} handleSelect={handleSelect} />
+            {
+                list.map((item, index) => ( 
+                        <SelectItem key={index} data={item} handleSelect={handleSelect} />
                 ))
             }
           </motion.ul>

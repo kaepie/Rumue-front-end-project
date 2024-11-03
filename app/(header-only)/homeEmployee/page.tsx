@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import{ useState ,useEffect } from 'react';
 import TransactionDetails from "./transactionDetails";
-
 export default function HomePage() {
 
   // const { data: session , status} = useSession();
@@ -24,7 +23,8 @@ export default function HomePage() {
     "Status": "",
     "VipNumber": "",
     "CreatedAt": "",
-    "UpdatedAt": ""
+    "UpdatedAt": "",
+    "ReceiptDate": ""
   });
   const [user, setUser] = useState({
     "ID": "",
@@ -151,10 +151,11 @@ export default function HomePage() {
         throw new Error('Network response was not ok');
       }
 
+      console.log("12313121312312");
       const data = await res.json();
       const transaction = data.payload.transaction || []; // สมมติว่า response มีข้อมูล transactions ในฟิลด์ Transactions
+      console.log("here: ",transaction);
 
-      console.log(transaction);
       setTransactionsData([
           transaction
       ]
@@ -164,6 +165,10 @@ export default function HomePage() {
       console.error("Error loading TransactionData:", error);
     }
   }
+
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
 
   return (
     <>
@@ -193,7 +198,7 @@ export default function HomePage() {
         </div>
         <button
           className="flex flex-row items-center justify-center shadow-lg rounded-full py-2 px-6 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText hover:border-secondaryText transition-all duration-200"
-          onClick={() => handleSearch}
+          onClick={handleSearch}
         >
           ค้นหา
         </button>

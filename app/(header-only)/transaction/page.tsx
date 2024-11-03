@@ -117,6 +117,7 @@ export default function vehicleform() {
     const [filePreview, setFilePreview] = useState<string | null>(null); // State for file preview
     const [fileSlipPreview, setFileSlipPreview] = useState<string | null>(null); // State for file preview
 
+
     const createVehicle = async () => {
         try {
         const RegistrationDate = new Date(registrationDate).toISOString();
@@ -255,7 +256,6 @@ export default function vehicleform() {
         }
         return false;
     };
-
 
 
     const clickSubmit = async () => {

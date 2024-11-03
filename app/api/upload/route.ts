@@ -9,11 +9,13 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File;
     const arrayBuffer = await file.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
-    await fs.writeFile(`./public/uploads/${file.name}`, buffer);
+    const split = file.name.split(".");
+    const filenameDate = (split[0] + Date.now() + "." + split[1]).replace(/ /g, "_");
+    await fs.writeFile(`./public/uploads/${filenameDate}`, buffer);
 
     revalidatePath("/");
 
-    return NextResponse.json({ status: "success" });
+    return NextResponse.json({ path: filenameDate, status: "success" });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ status: "fail", error: e });
