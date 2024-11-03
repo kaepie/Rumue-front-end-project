@@ -93,16 +93,63 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 }),
             });
 
-            if (res.ok) {
-                setUpdateStatus(true);
-                setTimeout(() => {
-                   setUpdateStatus(false);
-                }, 750);
-                console.log("statusTransaction: ",statusTransaction);
-                setOpenDetail(false)
-                setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 1000);
+            if (res.ok && statusTransaction == 'approved') {
+                const receiptFileResponse = await fetch("/api/pdf-gen/virtual", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "InvoiceDate": transaction.CreatedAt,
+                        "ApproveDate": transaction.UpdatedAt,
+                        "TranID": transaction.ID,
+                        "Name": user.Fname + " " + user.Lname,
+                        "Description": transaction.InsuranceType,
+                        "Price": transaction.Price,
+                        "Cip": transaction.CipNumber, //พรบ
+                        "Vip": transaction.VipNumber,
+                        "Brand": vehicle.Brand,
+                        "Model": vehicle.Model,
+                        "Year": vehicle.ModelYear,
+                        "Color": vehicle.VehicleColor
+                    })
+                });
+
+                if (receiptFileResponse.ok) {
+                    const pdfBlob = await receiptFileResponse.blob();
+
+                    const file = new File([pdfBlob], `invoice_${transaction.ID}_${user.Fname}.pdf`, {
+                        type: 'application/pdf',
+                    });
+
+                    const formData = new FormData();
+                    formData.append('transactionID', transaction.ID);
+                    formData.append('receiptFile', file);
+
+                    const resEmail = await fetch("http://localhost:3001/email/receipt", {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    const result = await resEmail.json();
+
+                    if (result.ok) {
+                        setUpdateStatus(true);
+                        setTimeout(() => {
+                            setUpdateStatus(false);
+                        }, 750);
+                        console.log("statusTransaction: ", statusTransaction);
+                        setOpenDetail(false);
+                        setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 1000);
+                    } else {
+                        console.error('Failed to send email:', result);
+                    }
+                } else {
+                    console.error('Failed to generate PDF:', receiptFileResponse.statusText);
+                }
+
             }
         }
     };
