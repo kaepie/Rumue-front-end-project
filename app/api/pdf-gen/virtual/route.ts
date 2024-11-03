@@ -100,8 +100,7 @@ export async function POST(req: Request) {
 
         await browser.close();
 
-        // Set headers for file download
-        const response = NextResponse.json(pdfBuffer, { status: 200 });
+        const response = new NextResponse(pdfBuffer, { status: 200 });
         response.headers.set('Content-Type', 'application/pdf');
         response.headers.set('Content-Disposition', `attachment; filename=invoice_${name}.pdf`);
         response.headers.set('Content-Length', pdfBuffer.length.toString());
