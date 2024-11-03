@@ -226,6 +226,7 @@ export default function SelectBox({
       
       const date = setVehicleFormProps.RegistrationDate
       const dateSplit = date.split("T")[0];
+      
       setId(setVehicleFormProps.ID);
       setRegistrationDate(dateSplit);
       setRegistrationNumber(setVehicleFormProps.RegistrationNumber);

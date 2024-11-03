@@ -6,6 +6,7 @@ import Image from "next/image";
 import SelectBox from "./selectBox";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { format } from 'date-fns';
 
 interface TransactionDetailsProps {
     transaction: {
@@ -19,6 +20,7 @@ interface TransactionDetailsProps {
     "VipNumber": string;
     "CreatedAt": string;
     "UpdatedAt": string;
+    "ReceiptDate": string;
     },
     user: {
     "ID": string;
@@ -73,8 +75,10 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
     const [CipNumber, setCipNumber] = useState(transaction.CipNumber);
     const [VipNumber, setVipNumber] = useState(transaction.VipNumber);
     const [error, setError] = useState(false);
+    const [clickDisabled, setClickDisabled] = useState(false);
+    const splitTime = transaction.ReceiptDate.split("T")[0];
     
-    const updateStatusData = async () => {
+    const updateStatusData = async (check :string) => {
         const token = session?.user?.token;
     
         if (token) {
@@ -88,8 +92,8 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 body: JSON.stringify({
                     ID: transaction.ID,
                     Status: statusTransaction,
-                    CipNumber: CipNumber,
-                    VipNumber: VipNumber
+                    CipNumber: check === "approved" ? "" : check === "rejected" ? "" : CipNumber,
+                    VipNumber: check === "approved" ? "" : check === "rejected" ? "" : VipNumber,
                 }),
             });
 
@@ -161,11 +165,27 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
     // }, [statusTransaction]);
 
     const handleUpdateStatusClick = () => {
-        if (statusTransaction !== transaction.Status && CipNumber !== "") {
-            updateStatusData();
-        }
-        if (CipNumber === "") {
+        if (statusTransaction === "pending" && (CipNumber === "" || VipNumber === "")) {
             setError(true);
+            return;
+        }
+        if ((statusTransaction === "approved" && transaction.Status === "pending" && CipNumber !== "")) {
+            updateStatusData("approved");
+            return;
+        }
+        if ((statusTransaction === "approved" && transaction.Status === "pending" && CipNumber === "")) {
+            setError(true);
+            return;
+        }
+
+        if ((statusTransaction === "rejected" && transaction.Status === "pending")){
+            updateStatusData("rejected");
+            return;
+        }
+
+        if (statusTransaction === "pending" && transaction.Status === "pending") {   
+            setError(true);
+            return;
         }
     }
 
@@ -178,6 +198,46 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
         }
     }
     , [CipNumber, VipNumber]);
+
+    function formatTimestamp(timestamp: string | undefined): string {
+        timestamp = timestamp?timestamp:"2024-11-01T19:45:11.360291Z"
+        const date = new Date(timestamp);
+    
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const year = date.getUTCFullYear();
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    
+        return `${day}-${month}-${year} ${hours}:${minutes}`;
+    }
+
+    const GenPDF = async()=> {
+        const response = await fetch("/api/pdf-gen",{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+              {
+                "InvoiceDate": format(new Date(), 'dd-MM-yyyy HH:mm'),
+                "ApproveDate": formatTimestamp(transaction.UpdatedAt),
+                "TranID": transaction.ID,
+                "Name": user.Fname+" "+user.Lname,
+                "Description":transaction.InsuranceType,
+                "Price":transaction.Price,
+                "Cip":transaction.CipNumber, //พรบ
+                "Vip":transaction.VipNumber,
+                "Brand": vehicle.Brand,
+                "Model": vehicle.Model,
+                "Year": vehicle.ModelYear,
+                "Color": vehicle.VehicleColor
+            }
+            )
+          })
+          
+    }
+
     
     return (
     <div className="w-screen h-auto grid lg:grid-cols-[1fr_2fr] gap-6 justify-center items-center py-24 px-6">   
@@ -243,39 +303,57 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 </div>
                 
                 <div className="flex flex-col justify-center items-center h-80 w-full gap-2">
-                    <div className="w-full flex flex-col">
-                        <ParagraphAnimation content={"เลขกรมธรรม์ของพรบ."} className="text-primaryText w-1/3" />
-                        <input
-                            value={CipNumber}
-                            onChange={(e) => setCipNumber(e.target.value)}
-                            placeholder={"เลขกรมธรรม์ของพรบ."}
-                            type="text"
-                            className={`w-full h-14 text-primaryText rounded-xl p-3 border-2  placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`}
-                        />
-                    </div>
-                    <div className="w-full flex flex-col">
-                        <ParagraphAnimation content={"เลขกรมธรรม์ของประกัน"} className="text-primaryText w-1/3" />
-                        <input
-                            value={VipNumber}
-                            onChange={(e) => setVipNumber(e.target.value)}
-                            placeholder={"เลขกรมธรรม์ของประกัน"}
-                            type="text"
-                            className={`w-full h-14 text-primaryText rounded-xl p-3 border-2 placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`}
-                        />
-                    </div>
-                    <SelectBox list={statusTransaction === "pending" ? ["approve", "reject"] : statusTransaction === "approve" ? ["pending", "reject"] : ["pending", "approve"]} nameMenu="เลือกสถานะ" isOpen={isOpen} setIsOpen={setIsOpen} setValue={setStatusTransaction} value={statusTransaction} />
-                    <button 
-                        onClick={handleUpdateStatusClick}
-                        className="flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText"
-                        >
-                            อนุมัติคำขอ
-                    </button>
-                    <button 
-                        // onClick={scrollToNextSection}
-                        className="flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText"
-                        >
-                            ดาวโหลดใบเสร็จ
-                    </button>
+                    { transaction.Status === "pending" &&  (
+                        <>
+                            {  statusTransaction === "approved" && (
+                                <>
+                                    <div className="w-full flex flex-col">
+                                        <ParagraphAnimation content={"เลขกรมธรรม์ของพรบ."} className="text-primaryText w-1/3 text-nowrap" />
+                                        <input
+                                            value={CipNumber}
+                                            onChange={(e) => setCipNumber(e.target.value)}
+                                            placeholder={"เลขกรมธรรม์ของพรบ."}
+                                            type="text"
+                                            className={`w-full h-14 text-primaryText rounded-xl p-3 border-2  placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`} />
+                                    </div>
+                                    <div className="w-full flex flex-col">
+                                        <ParagraphAnimation content={"เลขกรมธรรม์ของประกัน"} className="text-primaryText w-1/3 text-nowrap" />
+                                        <input
+                                            value={VipNumber}
+                                            onChange={(e) => setVipNumber(e.target.value)}
+                                            placeholder={"เลขกรมธรรม์ของประกัน"}
+                                            type="text"
+                                            className={`w-full h-14 text-primaryText rounded-xl p-3 border-2 placeholder-secondaryText focus:outline-none focus:border-primary focus:ring-0 transition duration-200 ease-in-out hover:shadow-md`} />
+                                    </div>
+                                </>
+                                )
+                             }
+                            <SelectBox list={statusTransaction === "pending" ? ["approved", "rejected"] : statusTransaction === "approved" ? ["rejected"] : ["approved"]} nameMenu="เลือกสถานะ" isOpen={isOpen} setIsOpen={setIsOpen} setValue={setStatusTransaction} value={statusTransaction} />
+                            <button
+                                onClick={handleUpdateStatusClick}
+                                className="flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText"
+                            >
+                                update
+                            </button>
+                        </>
+                        )
+                    }
+                    { transaction.Status === "approved" && (
+                        <button 
+                            disabled={clickDisabled}
+                            onClick={() => {
+                                GenPDF();
+                                setClickDisabled(true);
+                                setTimeout(() => {
+                                    setClickDisabled(false);
+                                }, 10000);
+                            }}
+                            className={`flex flex-row items-center justify-center shadow-lg rounded-3xl py-2 px-4 ${clickDisabled ? "hover:text-gray-400 text-gray-400 bg-gray-200 border-2 border-gray-300 cursor-not-allowed" : "bg-primaryText text-primaryBackground border-2 border-primaryText hover:bg-primaryBackground hover:text-primaryText"} `}
+                            >
+                                ดาวโหลดใบเสร็จ
+                        </button>
+                    )
+                    }
                 </div>
             </div>
         </div>
@@ -397,6 +475,10 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                     <div className="flex justify-between border-b-[1px] py-2 border-border">
                         <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="ประเภทยาง" />
                         <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${vehicle.WheelType}`} />
+                    </div>
+                    <div className="flex justify-between border-b-[1px] py-2 border-border">
+                        <ParagraphAnimation className="text-sm font-medium text-lef w-full" content="เวลาออกใบเสร็จ" />
+                        <ParagraphAnimation className="text-sm text-right w-full text-primaryText font-bold" content={`${splitTime === "0001-01-01" ? "ไม่ระบุเวลา" : splitTime}`} />
                     </div>
                     
                 </div>

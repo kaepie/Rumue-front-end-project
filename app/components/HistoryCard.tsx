@@ -32,11 +32,11 @@ function HistoryCard(props:any) {
                         <UserSearch className='text-[#DC8C00]' size={50}></UserSearch>
                     </>
                     }
-                    {props.status == 'approve' && <>
+                    {props.status == 'approved' && <>
                         <p className="text-[#4CAF50] text-3xl">ดำเนินการสำเร็จ</p>
                         <Check className='text-[#4CAF50]' size={50}></Check>
                     </>}
-                    {props.status == 'reject' && <>
+                    {props.status == 'rejected' && <>
                         <p className="text-[#E53935] text-3xl">ถูกปฏิเสธ</p>
                         <X className='text-[#E53935]' size={50}></X>
                         </>}

@@ -512,9 +512,8 @@ export default function VehicleForm({
                 body: formData,
             });
             const result = await response.json();
-            console.log(result);
 
-            const previewUrl = `/uploads/${file.name}`;
+            const previewUrl = `/uploads/${result.path}`;
 
             setFilePreviewUrl(previewUrl);
 
