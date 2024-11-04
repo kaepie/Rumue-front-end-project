@@ -1,6 +1,7 @@
 import ParagraphAnimation from "@/app/components/ParagraphAnimation";
 import TextTitleAnimation from "@/app/components/TextTitleAnimation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Dispatch, FormEventHandler, SetStateAction, } from "react";
 
 interface RegisterSectionProps {
@@ -23,8 +24,16 @@ interface RegisterSectionProps {
 
 export default function RegisterSection(registerSection: RegisterSectionProps) {
 
+  const router = useRouter();
+
   return (
     <div className="flex flex-col container h-auto bg-white border-2 border-border rounded-xl p-20">
+
+      <div className="flex flex-row justify-start">
+          <button onClick={() => router.back()}>
+              <span className="text-primaryText underline"> ย้อนกลับ </span>
+          </button>
+      </div>
       {/*Create Account*/}
       <TextTitleAnimation content="สร้างบัญชี" className=" text-3xl text-thridText" />
       <div className="flex-row flex gap-2">

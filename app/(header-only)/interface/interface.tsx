@@ -62,6 +62,7 @@ export interface TransactionData {
 
 export interface TransactionWithUndefined {
     transaction: TransactionData | undefined;
+    setClickDetail? : any;
 }
 
 export interface UserWithUndefined {

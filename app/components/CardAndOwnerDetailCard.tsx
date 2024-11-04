@@ -1,10 +1,11 @@
+import { useRouter } from "next/navigation";
 import { TransactionData, TransactionWithUndefined } from "../(header-only)/interface/interface";
 import CarDetailCard from "./CarDetailCard";
 import FileAndImgHistoryCard from "./FileAndImgHistoryCard";
 import OrderSection from "./OrderSection";
 
 
-function CardAndOwnerDetailCard({transaction}:TransactionWithUndefined){
+function CardAndOwnerDetailCard({transaction, setClickDetail}:TransactionWithUndefined){
     const chooseStatusWord = (status:string) => {
         console.log(status)
         if (status === 'pending') return 'กำลังดำเนินการ'
@@ -17,8 +18,14 @@ function CardAndOwnerDetailCard({transaction}:TransactionWithUndefined){
         const timeArray = time.split('T')
         return timeArray[0]
     }
+
     return (
         <div className="flex flex-col gap-8 ">
+            <div className="flex flex-row justify-start">
+                <button onClick={() => setClickDetail(true)}>
+                    <span className="text-primaryText underline"> ย้อนกลับ </span>
+                </button>
+            </div>
             <div className="flex items-center justify-center"><p className="text-primaryText text-[36px] font-bold">{transaction?.Transaction.ID}</p></div>
             <div className="flex items-baseline justify-center">
                 <p className="text-[30px] font-bold">สถานะ:&nbsp;</p>

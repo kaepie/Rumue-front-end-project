@@ -63,7 +63,7 @@ export default function History(){
         {
             !clickDetail&&
             <div className="px-32 py-24 flex justify-center">
-                <CardAndOwnerDetailCard transaction={item}></CardAndOwnerDetailCard>
+                <CardAndOwnerDetailCard transaction={item} setClickDetail={setClickDetail} ></CardAndOwnerDetailCard>
             </div>
             
         }

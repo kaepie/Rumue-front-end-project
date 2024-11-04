@@ -92,8 +92,8 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 body: JSON.stringify({
                     ID: transaction.ID,
                     Status: statusTransaction,
-                    CipNumber: check === "approved" ? "" : check === "rejected" ? "" : CipNumber,
-                    VipNumber: check === "approved" ? "" : check === "rejected" ? "" : VipNumber,
+                    CipNumber: check === "rejected" ? "" : CipNumber,
+                    VipNumber: check === "rejected" ? "" : VipNumber,
                 }),
             });
 
@@ -104,7 +104,7 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        "InvoiceDate": transaction.CreatedAt,
+                        "InvoiceDate": transaction.UpdatedAt,
                         "ApproveDate": transaction.UpdatedAt,
                         "TranID": transaction.ID,
                         "Name": user.Fname + " " + user.Lname,
@@ -151,6 +151,17 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 } else {
                     console.error('Failed to generate PDF:', receiptFileResponse.statusText);
                 }
+            }
+            if (res.ok && statusTransaction === 'rejected' ) {
+                setUpdateStatus(true);
+                setTimeout(() => {
+                    setUpdateStatus(false);
+                }, 750);
+                console.log("statusTransaction: ", statusTransaction);
+                setOpenDetail(false);
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 1000);
 
             }
         }
@@ -163,10 +174,11 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
     // }, [statusTransaction]);
 
     const handleUpdateStatusClick = () => {
-        if (statusTransaction === "pending" && (CipNumber === "" || VipNumber === "")) {
+        if (statusTransaction === "pending" && transaction.Status === "pending") {   
             setError(true);
             return;
         }
+        
         if ((statusTransaction === "approved" && transaction.Status === "pending" && CipNumber !== "")) {
             updateStatusData("approved");
             return;
@@ -181,10 +193,6 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
             return;
         }
 
-        if (statusTransaction === "pending" && transaction.Status === "pending") {   
-            setError(true);
-            return;
-        }
     }
 
     useEffect(() => {
