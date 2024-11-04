@@ -35,7 +35,7 @@ To get started with this project locally, please follow these steps:
 
 1. **Clone the Repository**  
    ```bash
-   [git clone https://github.com/kaepie/front-end-SA-project.git](https://github.com/kaepie/Rumue-front-end-project.git)
+   git clone https://github.com/kaepie/Rumue-front-end-project.git
    ```
 
 2. **Install Dependencies**  
