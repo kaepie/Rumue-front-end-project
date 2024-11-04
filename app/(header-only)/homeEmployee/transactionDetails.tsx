@@ -135,24 +135,12 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                         body: formData,
                     });
 
-                    if (resEmail.ok) {
-                        setUpdateStatus(true);
-                        setTimeout(() => {
-                            setUpdateStatus(false);
-                        }, 750);
-                        console.log("statusTransaction: ", statusTransaction);
-                        setOpenDetail(false);
-                        setTimeout(() => {
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }, 1000);
-                    } else {
-                        console.error('Failed to send email');
-                    }
+
                 } else {
                     console.error('Failed to generate PDF:', receiptFileResponse.statusText);
                 }
             }
-            if (res.ok && statusTransaction === 'rejected' ) {
+            if (res.ok ) {
                 setUpdateStatus(true);
                 setTimeout(() => {
                     setUpdateStatus(false);
@@ -162,7 +150,6 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                 setTimeout(() => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }, 1000);
-
             }
         }
     };
@@ -293,7 +280,7 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                     </div>
 
                     <div className="flex justify-between">
-                        <ParagraphAnimation className="text-sm font-medium text-left" content="หลักฐานการชำระเงิน" />
+                        <ParagraphAnimation className="text-sm font-medium text-left" content="สมุดจดทะเบียนรถ" />
                     </div>
                     <div className="w-full h-80 bg-secondaryBackground rounded-2xl overflow-clip">
                         {transaction.CrImageUrl && (
@@ -304,6 +291,20 @@ export default function TransactionDetails ({transaction, user, vehicle, setOpen
                                 height={400}
                                 className="w-full h-full object-cover"
                             />
+                        )}
+                    </div>
+                    <div className="flex justify-between">
+                        <ParagraphAnimation className="text-sm font-medium text-left" content="หลักฐานการชำระเงิน" />
+                    </div>
+                    <div className="w-full h-80 bg-secondaryBackground rounded-2xl overflow-clip">
+                        {transaction.CrImageUrl && (
+                                <Image
+                                    src={transaction.ESlipImageUrl}
+                                    alt="File preview"
+                                    width={400}
+                                    height={400}
+                                    className="w-full h-full object-cover"
+                                />
                         )}
                     </div>
                 </div>
