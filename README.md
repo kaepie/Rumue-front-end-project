@@ -38,7 +38,7 @@ To get started with this project locally, please follow these steps:
    git clone https://github.com/kaepie/front-end-SA-project.git
    ```
 
-2. **Clone the Repository**  
+2. **Install Dependencies**  
     ```bash
     npm install
     ```
