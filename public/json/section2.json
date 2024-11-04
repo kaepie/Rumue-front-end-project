@@ -1,0 +1,32 @@
+[
+    {
+        "number": "01",
+        "title": "กดไปที่เช็คราคา",
+        "description": "Lorem ipsum dolor sit amet consecte tur adipiscing elit semper dalaracc lacus vel facilisis volutpat est velitolm."
+    },
+    {
+        "number": "02",
+        "title": "กรอกข้อมูล",
+        "description": "Lorem ipsum dolor sit amet consecte tur adipiscing elit semper dalaracc lacus vel facilisis volutpat est velitolm."
+    },
+    {
+        "number": "03",
+        "title": "กดปุ่มเช็คราคา",
+        "description": "Lorem ipsum dolor sit amet consecte tur adipiscing elit semper dalaracc lacus vel facilisis volutpat est velitolm."
+    },
+    {
+        "number": "04",
+        "title": "กดทำรายการ",
+        "description": "Lorem ipsum dolor sit amet consecte tur adipiscing elit semper dalaracc lacus vel facilisis volutpat est velitolm."
+    },
+    {
+        "number": "05",
+        "title": "กรอกข้อมูลที่จำเป็น",
+        "description": "Lorem ipsum dolor sit amet consecte tur adipiscing elit semper dalaracc lacus vel facilisis volutpat est velitolm."
+    },
+    {
+        "number": "06",
+        "title": "ยืนยันการทำรายการ",
+        "description": "Lorem ipsum dolor sit amet consecte tur adipiscing elit semper dalaracc lacus vel facilisis volutpat est velitolm."
+    }
+  ]
